@@ -1,0 +1,82 @@
+using JetBrains.Annotations;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+using Random = System.Random;
+
+public class EnemyControl : MonoBehaviour
+{
+    public float moveSpeed = 1f;
+    public float dX = 0;
+    public float dY = 0;
+    Rigidbody2D rb;
+    [SerializeField] Tilemap tilemapBackground;
+
+    internal bool HasCollisionWithGhostTile = false;
+
+    void Awake()
+    {
+        Random rand = new Random();
+        double x = rand.NextDouble() * 2 - 1;
+        double y = CalculateY(x);
+        dX = (float)x;
+        dY = (float)y;
+        rb = GetComponent<Rigidbody2D>();
+
+        Vector2 movement = new(dX, dY);
+        rb.velocity = moveSpeed * movement;
+    }
+
+    void Update()
+    {
+        if (rb.velocity.x == 0 || rb.velocity.y == 0)
+        {
+            Vector2 movement = new(dX, dY);
+            rb.velocity = moveSpeed * movement;
+        }
+    }
+
+    public static double CalculateY(double x)
+    {
+        if (x < -1.0 || x > 1.0)
+        {
+            throw new ArgumentOutOfRangeException("x must be in the range -1 to 1.");
+        }
+
+        return Math.Sqrt(1 - x * x);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("TilemapGhost"))
+        {
+            HasCollisionWithGhostTile |= true;
+        }
+    }
+
+    internal bool EnemyHasColisionWithTiles(List<Vector3Int> tiles)
+    {
+        Vector3 cellPositionConverted = GetEnemyPoint();
+
+        if (cellPositionConverted != null)
+        {
+            foreach (var tile in tiles)
+            {
+                if (cellPositionConverted.x == tile.x && cellPositionConverted.y == tile.y)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    internal Vector3 GetEnemyPoint()
+    {
+        Vector3 enemyCenter = transform.position;
+        Vector3Int cellPosition = tilemapBackground.WorldToCell(enemyCenter);
+        return new Vector3(cellPosition.x / 4, cellPosition.y / 4, cellPosition.z);
+    }
+}
