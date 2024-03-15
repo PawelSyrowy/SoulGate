@@ -30,6 +30,7 @@ public class TilemapSpawner : MonoBehaviour
     [SerializeField] PlayerControl Player;
 
     List<Vector3Int> TileWorldPositions;
+    Vector2Int TileWorldSize;
 
     bool isDrawing = false;
     bool startedFromBorder = false;
@@ -39,13 +40,15 @@ public class TilemapSpawner : MonoBehaviour
 
     private void Start()
     {
+        //todo can't be hardcoded
         TileWorldPositions = new List<Vector3Int>
         {
-            new(0, 35, 0),
-            new(0, 0, 0),
-            new(71, 0, 0),
-            new(71, 35, 0)
+            new(-36, 17, 0),
+            new(-36, -18, 0),
+            new(35, -18, 0),
+            new(35, 17, 0)
         };
+        TileWorldSize = new Vector2Int(71, 35);
     }
 
     void LateUpdate()
@@ -107,7 +110,7 @@ public class TilemapSpawner : MonoBehaviour
         List<Vector3Int> pointsToDrawBorder = new();
         if (startedFromBorder && finishedOnBorder)
         {
-            ConnectPointsManager connectPointsManager = new(firstCell, lastCell, TileWorldPositions);
+            ConnectPointsManager connectPointsManager = new(firstCell, lastCell, TileWorldPositions, TileWorldSize);
             pointsToDrawBorder = connectPointsManager.FindWayBetweenPoints();
         }
         else if (finishedOnBorder != startedFromBorder)
@@ -124,7 +127,7 @@ public class TilemapSpawner : MonoBehaviour
         AddTiles(GetAllTilesPositions(TilemapGhost), TilemapBorder);
         ReplaceAllTiles(TilemapGhost, TilemapSafe);
 
-        ClosedShapesAlgorithm closedShapesAlgorithm = new(GetAllTilesPositions(TilemapBorder));
+        ClosedShapesAlgorithm closedShapesAlgorithm = new(GetAllTilesPositions(TilemapBorder), -TileWorldPositions[1].x, -TileWorldPositions[1].y, TileWorldSize);
         List<List<Vector3Int>> pointsToFillShape = closedShapesAlgorithm.GetEmptyPositions(Enemy.GetEnemyPoint());
 
         AddTiles(pointsToFillShape[0], TilemapGhost);

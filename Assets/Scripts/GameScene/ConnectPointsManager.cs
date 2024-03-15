@@ -8,13 +8,15 @@ public class ConnectPointsManager : MonoBehaviour
     Vector3Int FirstCell;
     Vector3Int LastCell;
     readonly List<Vector3Int> TilesPositionsOther;
+    readonly Vector2Int TileWorldSize;
     readonly List<Vector3Int> TilemapPositions;
 
-    internal ConnectPointsManager(Vector3Int firstCell, Vector3Int lastCell, List<Vector3Int> tileWorldPositions)
+    internal ConnectPointsManager(Vector3Int firstCell, Vector3Int lastCell, List<Vector3Int> tileWorldPositions, Vector2Int tileWorldSize)
     {
         FirstCell = firstCell;
         LastCell = lastCell;
         TilesPositionsOther = tileWorldPositions;
+        TileWorldSize = tileWorldSize;
     }
 
     internal List<Vector3Int> FindWayBetweenPoints()
@@ -47,11 +49,11 @@ public class ConnectPointsManager : MonoBehaviour
         List<Vector3Int> tilesShortestWay = new();
         bool checkX;
 
-        if (Mathf.Abs(FirstCell.x - LastCell.x) == 71)
+        if (Mathf.Abs(FirstCell.x - LastCell.x) == TileWorldSize.x)
         {
             checkX = false;
         }
-        else if (Mathf.Abs(FirstCell.y - LastCell.y) == 35)
+        else if (Mathf.Abs(FirstCell.y - LastCell.y) == TileWorldSize.y)
         {
             checkX = true;
         }
@@ -191,7 +193,7 @@ public class ConnectPointsManager : MonoBehaviour
         List<Vector3Int> borderTiles = new();
         foreach (var tile in TilemapPositions)
         {
-            if (tile.x == 0 || tile.x == 71 || tile.y == 35 || tile.y == 0)
+            if (tile.x == TilemapPositions[1].x || tile.x == TilemapPositions[3].x || tile.y == TilemapPositions[3].y || tile.y == TilemapPositions[1].y)
             {
                 borderTiles.Add(tile);
             }
@@ -216,20 +218,20 @@ public class ConnectPointsManager : MonoBehaviour
             int directionX = 0;
             int directionY = 0;
 
-            if (currentPosition.x == 71)
+            if (currentPosition.x == TilemapPositions[3].x)
             {
                 directionY = -clockwise;
             }
-            else if (currentPosition.x == 0)
+            else if (currentPosition.x == TilemapPositions[1].x)
             {
                 directionY = clockwise;
             }
 
-            if (currentPosition.y == 35)
+            if (currentPosition.y == TilemapPositions[3].y)
             {
                 directionX = clockwise;
             }
-            else if (currentPosition.y == 0)
+            else if (currentPosition.y == TilemapPositions[1].y)
             {
                 directionX = -clockwise;
             }

@@ -10,7 +10,7 @@ public class GameHandler : MonoBehaviour
 
     private void Start()
     {
-        levelGrid = new LevelGrid(71, 35);
+        levelGrid = new LevelGrid(71, 35); //todo can't be hardcoded
 
         player.Setup(levelGrid);
         levelGrid.Setup(player);

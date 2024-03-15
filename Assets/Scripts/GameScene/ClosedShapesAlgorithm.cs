@@ -12,6 +12,7 @@ public class ClosedShapesAlgorithm : MonoBehaviour
     readonly List<Vector3Int> Positions;
     readonly int OffsetX;
     readonly int OffsetY;
+    readonly Vector2Int TileWorldSize;
 
     bool[,] grid;
     int width;
@@ -22,17 +23,18 @@ public class ClosedShapesAlgorithm : MonoBehaviour
     //public List<Vector3> BusyPositionsTest = new List<Vector3>();
     //public List<Vector3> BorderPositionsTest = new List<Vector3>();
 
-    internal ClosedShapesAlgorithm(List<Vector3Int> positions)
+    internal ClosedShapesAlgorithm(List<Vector3Int> positions, int offsetX, int offsetY, Vector2Int tileWorldSize)
     {
         Positions = positions;
-        OffsetX =  1;
-        OffsetY =  1;
+        OffsetX = offsetX + 1;
+        OffsetY = offsetY + 1;
+        TileWorldSize = tileWorldSize;
     }
 
     internal List<List<Vector3Int>> GetEmptyPositions(Vector3 enemyPoint)
     {
-        width = 74;
-        height = 38;
+        width = TileWorldSize.x + 3;
+        height = TileWorldSize.y + 3;
 
         grid = new bool[width, height];
         foreach (Vector3Int position in Positions)
@@ -49,7 +51,7 @@ public class ClosedShapesAlgorithm : MonoBehaviour
             grid[position.x + OffsetX, position.y + OffsetY] = true;
         }
         Vector3Int enemyPointConverted = Vector3Int.RoundToInt(enemyPoint);
-        FloodFill(new Point(enemyPointConverted.x * 4 + OffsetX, enemyPointConverted.y * 4 + OffsetY));
+        FloodFill(new Point(enemyPointConverted.x + OffsetX, enemyPointConverted.y + OffsetY));
         List<Vector3Int> NegativePositions = PrintGrid()[1];
 
         List<List<Vector3Int>> positions = new()
