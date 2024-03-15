@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LevelGrid
 {
@@ -38,7 +40,9 @@ public class LevelGrid
 
     public void SnakeMoved(Vector2Int playerGridPosition)
     {
-        if (playerGridPosition == foodGridPosition)
+        Vector2 playerGridPositionBig = new Vector2Int ((int)math.floor(playerGridPosition.x / 2), (int)math.floor(playerGridPosition.y / 2));
+        Vector2 foodGridPositionBig = new Vector2Int((int)math.floor(foodGridPosition.x / 2), (int)math.floor(foodGridPosition.y / 2));
+        if (playerGridPositionBig == foodGridPositionBig)
         {
             Object.Destroy(foodGameObject);
             SpawnFood();
