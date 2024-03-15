@@ -17,13 +17,31 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] SpriteRenderer playerRenderer;
     [SerializeField] Tilemap tilemapBackground;
 
+    private LevelGrid levelGrid;
+
+    public void Setup(LevelGrid levelGrid)
+    {
+        this.levelGrid = levelGrid;
+    }
+
     void Update()
+    {
+        HandleMovement();
+        HandleLogic();
+    }
+
+    private void HandleMovement()
     {
         float dX = Input.GetAxis("Horizontal");
         float dY = Input.GetAxis("Vertical");
         Vector2 movement = new(dX, dY);
         rb.velocity = movement * moveSpeed;
 
+        levelGrid.SnakeMoved(GetGridPosition());
+    }
+
+    private void HandleLogic()
+    {
         CheckIsPlayerOnBackground();
 
         if (DrawingBan == true)
@@ -34,6 +52,14 @@ public class PlayerControl : MonoBehaviour
         {
             playerRenderer.color = Color.yellow;
         }
+    }
+
+    public Vector2Int GetGridPosition()
+    {
+        Vector3Int roundedPosition = new Vector3Int(Mathf.RoundToInt(transform.position.x),
+                                                    Mathf.RoundToInt(transform.position.y),
+                                                    Mathf.RoundToInt(transform.position.z));
+        return new Vector2Int(roundedPosition.x, roundedPosition.y);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

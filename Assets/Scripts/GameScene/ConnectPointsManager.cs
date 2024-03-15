@@ -191,7 +191,7 @@ public class ConnectPointsManager : MonoBehaviour
         List<Vector3Int> borderTiles = new();
         foreach (var tile in TilemapPositions)
         {
-            if (tile.x == -36 || tile.x == 35 || tile.y == 17 || tile.y == -18)
+            if (tile.x == 0 || tile.x == 71 || tile.y == 35 || tile.y == 0)
             {
                 borderTiles.Add(tile);
             }
@@ -216,20 +216,20 @@ public class ConnectPointsManager : MonoBehaviour
             int directionX = 0;
             int directionY = 0;
 
-            if (currentPosition.x == 35)
+            if (currentPosition.x == 71)
             {
                 directionY = -clockwise;
             }
-            else if (currentPosition.x == -36)
+            else if (currentPosition.x == 0)
             {
                 directionY = clockwise;
             }
 
-            if (currentPosition.y == 17)
+            if (currentPosition.y == 35)
             {
                 directionX = clockwise;
             }
-            else if (currentPosition.y == -18)
+            else if (currentPosition.y == 0)
             {
                 directionX = -clockwise;
             }

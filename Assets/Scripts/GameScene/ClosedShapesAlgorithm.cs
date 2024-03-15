@@ -22,11 +22,11 @@ public class ClosedShapesAlgorithm : MonoBehaviour
     //public List<Vector3> BusyPositionsTest = new List<Vector3>();
     //public List<Vector3> BorderPositionsTest = new List<Vector3>();
 
-    internal ClosedShapesAlgorithm(List<Vector3Int> positions, int offsetX, int offsetY)
+    internal ClosedShapesAlgorithm(List<Vector3Int> positions)
     {
         Positions = positions;
-        OffsetX = offsetX + 1;
-        OffsetY = offsetY + 1;
+        OffsetX =  1;
+        OffsetY =  1;
     }
 
     internal List<List<Vector3Int>> GetEmptyPositions(Vector3 enemyPoint)

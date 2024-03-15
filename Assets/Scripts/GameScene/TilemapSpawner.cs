@@ -41,10 +41,10 @@ public class TilemapSpawner : MonoBehaviour
     {
         TileWorldPositions = new List<Vector3Int>
         {
-            new(-36, 17, 0),
-            new(-36, -18, 0),
-            new(35, -18, 0),
-            new(35, 17, 0)
+            new(0, 35, 0),
+            new(0, 0, 0),
+            new(71, 0, 0),
+            new(71, 35, 0)
         };
     }
 
@@ -124,7 +124,7 @@ public class TilemapSpawner : MonoBehaviour
         AddTiles(GetAllTilesPositions(TilemapGhost), TilemapBorder);
         ReplaceAllTiles(TilemapGhost, TilemapSafe);
 
-        ClosedShapesAlgorithm closedShapesAlgorithm = new(GetAllTilesPositions(TilemapBorder), 36, 18);
+        ClosedShapesAlgorithm closedShapesAlgorithm = new(GetAllTilesPositions(TilemapBorder));
         List<List<Vector3Int>> pointsToFillShape = closedShapesAlgorithm.GetEmptyPositions(Enemy.GetEnemyPoint());
 
         AddTiles(pointsToFillShape[0], TilemapGhost);
