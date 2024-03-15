@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GameHandler : MonoBehaviour
 {
     [SerializeField] private WinningManager winningManager;
     [SerializeField] private TilemapSpawner tilemapSpawner;
     [SerializeField] private PlayerControl player;
+    [SerializeField] private Tilemap tilemapBackground;
 
     private LevelGrid levelGrid;
     List<Vector3Int> TileWorldPositions;
@@ -28,11 +30,11 @@ public class GameHandler : MonoBehaviour
     {
         levelGrid = new LevelGrid(TileWorldSize.x, TileWorldSize.y);
 
-        player.Setup(levelGrid);
+        player.Setup(tilemapBackground, levelGrid, winningManager);
         levelGrid.Setup(player);
 
         tilemapSpawner.Setup(TileWorldPositions, TileWorldSize, player);
-        winningManager.Setup(tilemapSpawner);
+        winningManager.Setup(tilemapSpawner, tilemapBackground);
 
     }
 }

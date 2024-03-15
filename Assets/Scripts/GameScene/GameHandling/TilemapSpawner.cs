@@ -21,7 +21,6 @@ public class TilemapSpawner : MonoBehaviour
 
     [SerializeField] internal Tilemap TilemapSafe;
     [SerializeField] Tilemap TilemapGhost;
-    [SerializeField] internal Tilemap TilemapBackground;
     [SerializeField] Tilemap TilemapBorder; 
     [SerializeField] TileBase tileToSpawn;
 
@@ -45,16 +44,19 @@ public class TilemapSpawner : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Enemy.HasCollisionWithGhostTile == true)
+        if (Enemy!=null)
         {
-            DestroyGhostTiles();
-            Enemy.HasCollisionWithGhostTile = false;
-            if (Player != null)
+            if (Enemy.HasCollisionWithGhostTile == true)
             {
-                Player.DrawingBan = true;
+                DestroyGhostTiles();
+                Enemy.HasCollisionWithGhostTile = false;
+                if (Player != null)
+                {
+                    Player.DrawingBan = true;
+                }
             }
         }
-        if (Player != null)
+        if (Player != null && Player.state.ToString()=="Alive")
         {
             Player.CheckCanPlayerDraw(IsPlayerOnGhostTiles(), IsPlayerOnSafeTiles());
 

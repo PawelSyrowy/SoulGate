@@ -6,20 +6,23 @@ using UnityEngine.Tilemaps;
 public class WinningManager : MonoBehaviour
 {
     TilemapSpawner TilemapSpawner;
+    Tilemap TilemapBackground;
 
     float backgroundTilesAmount;
     float safeTilesAmount;
     float winPercentage = 0;
     bool win = false;
+    bool playerState = true;
 
-    internal void Setup(TilemapSpawner tilemapSpawner)
+    internal void Setup(TilemapSpawner tilemapSpawner, Tilemap tilemapBackground)
     {
         TilemapSpawner = tilemapSpawner;
+        TilemapBackground = tilemapBackground;
     }
 
     private void Start()
     {
-        int tileCount = CountTiles(TilemapSpawner.TilemapBackground);
+        int tileCount = CountTiles(TilemapBackground);
         backgroundTilesAmount = (float)tileCount;
     }
     private void LateUpdate()
@@ -51,5 +54,10 @@ public class WinningManager : MonoBehaviour
         }
 
         return count;
+    }
+
+    internal void GetPlayerState(bool playerState)
+    {
+        this.playerState = playerState;
     }
 }

@@ -8,8 +8,9 @@ public class PlayerControl : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
     [SerializeField] SpriteRenderer playerRenderer;
-    [SerializeField] Tilemap tilemapBackground;
+    private Tilemap tilemapBackground;
     private LevelGrid levelGrid;
+    private WinningManager winningManager;
 
     public float moveSpeed = 2f;
 
@@ -18,15 +19,32 @@ public class PlayerControl : MonoBehaviour
     internal bool IsDrawing = false;
     internal bool DrawingBan = true;
 
-    public void Setup(LevelGrid levelGrid)
+    internal enum State
     {
+        Alive,
+        Dead
+    }
+
+    internal State state = State.Alive;
+
+    public void Setup(Tilemap tilemapBackground, LevelGrid levelGrid, WinningManager winningManager)
+    {
+        this.tilemapBackground = tilemapBackground;
         this.levelGrid = levelGrid;
+        this.winningManager = winningManager;
     }
 
     void Update()
     {
-        HandleMovement();
-        HandleLogic();
+        switch (state)
+        {
+            case State.Alive:
+                HandleMovement();
+                HandleLogic();
+                break;
+            case State.Dead:
+                break;
+        }
     }
 
     private void HandleMovement()
@@ -65,7 +83,10 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            state = State.Dead;
+            playerRenderer.color = Color.gray;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            winningManager.GetPlayerState(false);
         }
 
         //if (collision.gameObject.CompareTag("GreenTile"))

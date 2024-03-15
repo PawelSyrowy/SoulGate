@@ -293,6 +293,7 @@ MonoBehaviour:
   winningManager: {fileID: 8802446284169291150}
   tilemapSpawner: {fileID: 365779239}
   player: {fileID: 901755015}
+  tilemapBackground: {fileID: 1268124879}
 --- !u!114 &365779239 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4666429932414573650, guid: a8ed1230f0e3fe04e913a29d87571c27, type: 3}
@@ -615,8 +616,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2139189039}
   - {fileID: 1268124877}
+  - {fileID: 2139189039}
   - {fileID: 1896996731}
   - {fileID: 432152589}
   - {fileID: 19210864}

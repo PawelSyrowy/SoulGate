@@ -77,6 +77,6 @@ public class EnemyControl : MonoBehaviour
     {
         Vector3 enemyCenter = transform.position;
         Vector3Int cellPosition = tilemapBackground.WorldToCell(enemyCenter);
-        return new Vector3(cellPosition.x / 4, cellPosition.y / 4, cellPosition.z);
+        return new Vector3(cellPosition.x, cellPosition.y, cellPosition.z);
     }
 }
