@@ -6,18 +6,17 @@ using UnityEngine.Tilemaps;
 
 public class PlayerControl : MonoBehaviour
 {
+    [SerializeField] Rigidbody2D rb;
+    [SerializeField] SpriteRenderer playerRenderer;
+    [SerializeField] Tilemap tilemapBackground;
+    private LevelGrid levelGrid;
+
     public float moveSpeed = 2f;
 
     internal bool IsOnBackground = false;
     internal bool CanDraw = false;
     internal bool IsDrawing = false;
     internal bool DrawingBan = true;
-
-    [SerializeField] Rigidbody2D rb;
-    [SerializeField] SpriteRenderer playerRenderer;
-    [SerializeField] Tilemap tilemapBackground;
-
-    private LevelGrid levelGrid;
 
     public void Setup(LevelGrid levelGrid)
     {

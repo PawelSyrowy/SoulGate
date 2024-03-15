@@ -13,24 +13,22 @@ using Vector3 = UnityEngine.Vector3;
 
 public class TilemapSpawner : MonoBehaviour
 {
-    [SerializeField] internal Tilemap TilemapSafe;
-    [SerializeField] Tilemap TilemapGhost;
-    [SerializeField] internal Tilemap TilemapBackground;
-    [SerializeField] Tilemap TilemapBorder;
-
     //test
     [SerializeField] Tilemap TilemapBusyTest;
     [SerializeField] Tilemap TilemapForbiddenTest;
     [SerializeField] Tilemap TilemapEmptyTest;
     [SerializeField] Tilemap TilemapBorderTest;
 
+    [SerializeField] internal Tilemap TilemapSafe;
+    [SerializeField] Tilemap TilemapGhost;
+    [SerializeField] internal Tilemap TilemapBackground;
+    [SerializeField] Tilemap TilemapBorder; 
     [SerializeField] TileBase tileToSpawn;
-
-    [SerializeField] EnemyControl Enemy;
-    [SerializeField] PlayerControl Player;
 
     List<Vector3Int> TileWorldPositions;
     Vector2Int TileWorldSize;
+    PlayerControl Player;
+    [SerializeField] EnemyControl Enemy;
 
     bool isDrawing = false;
     bool startedFromBorder = false;
@@ -38,17 +36,11 @@ public class TilemapSpawner : MonoBehaviour
     Vector3Int firstCell;
     Vector3Int lastCell;
 
-    private void Start()
+    internal void Setup(List<Vector3Int> tileWorldPositions, Vector2Int tileWorldSize, PlayerControl player)
     {
-        //todo can't be hardcoded
-        TileWorldPositions = new List<Vector3Int>
-        {
-            new(-36, 17, 0),
-            new(-36, -18, 0),
-            new(35, -18, 0),
-            new(35, 17, 0)
-        };
-        TileWorldSize = new Vector2Int(71, 35);
+        TileWorldPositions = tileWorldPositions;
+        TileWorldSize = tileWorldSize;
+        Player = player;
     }
 
     void LateUpdate()

@@ -5,23 +5,28 @@ using UnityEngine.Tilemaps;
 
 public class WinningManager : MonoBehaviour
 {
-    [SerializeField] TilemapSpawner tilemapSpawner;
+    TilemapSpawner TilemapSpawner;
 
     float backgroundTilesAmount;
     float safeTilesAmount;
     float winPercentage = 0;
     bool win = false;
 
+    internal void Setup(TilemapSpawner tilemapSpawner)
+    {
+        TilemapSpawner = tilemapSpawner;
+    }
+
     private void Start()
     {
-        int tileCount = CountTiles(tilemapSpawner.TilemapBackground);
+        int tileCount = CountTiles(TilemapSpawner.TilemapBackground);
         backgroundTilesAmount = (float)tileCount;
     }
     private void LateUpdate()
     {
         if (!win)
         {
-            int tileCount = CountTiles(tilemapSpawner.TilemapSafe);
+            int tileCount = CountTiles(TilemapSpawner.TilemapSafe);
             safeTilesAmount = (float)tileCount;
             winPercentage = safeTilesAmount / backgroundTilesAmount * 100;
             if (winPercentage > 10)

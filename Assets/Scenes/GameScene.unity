@@ -290,6 +290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b432db24e3a6e4bbdd359b248e95f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  winningManager: {fileID: 8802446284169291150}
+  tilemapSpawner: {fileID: 365779239}
   player: {fileID: 901755015}
 --- !u!114 &365779239 stripped
 MonoBehaviour:
@@ -27764,6 +27766,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5677468130622522687, guid: 98355f00423e02f49b6955d29b8bc08f, type: 3}
   m_PrefabInstance: {fileID: 8802446284169291148}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8802446284169291150 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2223418897904198901, guid: 98355f00423e02f49b6955d29b8bc08f, type: 3}
+  m_PrefabInstance: {fileID: 8802446284169291148}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dbd881dfb70a614184bc61993818281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
