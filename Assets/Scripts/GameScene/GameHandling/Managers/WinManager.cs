@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class WinningManager : MonoBehaviour
+public class WinManager : MonoBehaviour
 {
-    TilemapSpawner TilemapSpawner;
     Tilemap TilemapBackground;
+    Tilemap TilemapSafe;
+    PlayerControl Player;
 
     float backgroundTilesAmount;
     float safeTilesAmount;
     float winPercentage = 0;
     bool win = false;
-    bool playerState = true;
 
-    internal void Setup(TilemapSpawner tilemapSpawner, Tilemap tilemapBackground)
+    internal void Setup(Tilemap tilemapBackground, Tilemap tilemapSafe, PlayerControl player)
     {
-        TilemapSpawner = tilemapSpawner;
         TilemapBackground = tilemapBackground;
+        TilemapSafe = tilemapSafe;
+        Player = player;
     }
 
     private void Start()
@@ -29,13 +30,13 @@ public class WinningManager : MonoBehaviour
     {
         if (!win)
         {
-            int tileCount = CountTiles(TilemapSpawner.TilemapSafe);
+            int tileCount = CountTiles(TilemapSafe);
             safeTilesAmount = (float)tileCount;
             winPercentage = safeTilesAmount / backgroundTilesAmount * 100;
-            if (winPercentage > 10)
+            if (winPercentage > 80)
             {
                 win = true;
-                Debug.Log("You win the game! " + backgroundTilesAmount.ToString() + " / " + safeTilesAmount.ToString());
+                Player.PlayerWin();
             }
         }
     }
@@ -54,10 +55,5 @@ public class WinningManager : MonoBehaviour
         }
 
         return count;
-    }
-
-    internal void GetPlayerState(bool playerState)
-    {
-        this.playerState = playerState;
     }
 }

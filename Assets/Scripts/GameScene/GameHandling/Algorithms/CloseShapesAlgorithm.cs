@@ -7,7 +7,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ClosedShapesAlgorithm : MonoBehaviour
+public class CloseShapesAlgorithm : MonoBehaviour
 {
     readonly List<Vector3Int> Positions;
     readonly int OffsetX;
@@ -23,7 +23,7 @@ public class ClosedShapesAlgorithm : MonoBehaviour
     //public List<Vector3> BusyPositionsTest = new List<Vector3>();
     //public List<Vector3> BorderPositionsTest = new List<Vector3>();
 
-    internal ClosedShapesAlgorithm(List<Vector3Int> positions, int offsetX, int offsetY, Vector2Int tileWorldSize)
+    internal CloseShapesAlgorithm(List<Vector3Int> positions, int offsetX, int offsetY, Vector2Int tileWorldSize)
     {
         Positions = positions;
         OffsetX = offsetX + 1;

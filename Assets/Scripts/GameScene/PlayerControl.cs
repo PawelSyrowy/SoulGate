@@ -10,7 +10,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] SpriteRenderer playerRenderer;
     private Tilemap tilemapBackground;
     private LevelGrid levelGrid;
-    private WinningManager winningManager;
+    private TilemapManager tilemapManager;
 
     public float moveSpeed = 2f;
 
@@ -22,16 +22,17 @@ public class PlayerControl : MonoBehaviour
     internal enum State
     {
         Alive,
-        Dead
+        Dead,
+        Win,
     }
 
     internal State state = State.Alive;
 
-    public void Setup(Tilemap tilemapBackground, LevelGrid levelGrid, WinningManager winningManager)
+    public void Setup(Tilemap tilemapBackground, LevelGrid levelGrid, TilemapManager tilemapManager)
     {
         this.tilemapBackground = tilemapBackground;
         this.levelGrid = levelGrid;
-        this.winningManager = winningManager;
+        this.tilemapManager = tilemapManager;
     }
 
     void Update()
@@ -44,6 +45,9 @@ public class PlayerControl : MonoBehaviour
                 break;
             case State.Dead:
                 break;
+            case State.Win:
+                HandleMovement()
+                ; break;
         }
     }
 
@@ -83,10 +87,10 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            state = State.Dead;
-            playerRenderer.color = Color.gray;
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
-            winningManager.GetPlayerState(false);
+            if (state == State.Alive)
+            {
+                PlayerDied();
+            }
         }
 
         //if (collision.gameObject.CompareTag("GreenTile"))
@@ -156,5 +160,27 @@ public class PlayerControl : MonoBehaviour
         {
             IsDrawing = false;
         }
+    }
+
+    internal void NewLife()
+    {
+        state = State.Alive;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        DrawingBan = true;
+    }
+
+    internal void PlayerDied()
+    {
+        state = State.Dead;
+        playerRenderer.color = Color.gray;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        GameHandler.PlayerDied(tilemapManager);
+    }
+
+    internal void PlayerWin()
+    {
+        playerRenderer.color = new Color(0.05f, 0.4f, 0.56f);
+        state = State.Win;
+        GameHandler.PlayerWin();
     }
 }

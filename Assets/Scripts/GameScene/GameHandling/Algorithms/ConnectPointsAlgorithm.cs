@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class ConnectPointsManager : MonoBehaviour
+public class ConnectPointsAlgorithm : MonoBehaviour
 {
     Vector3Int FirstCell;
     Vector3Int LastCell;
@@ -11,7 +11,7 @@ public class ConnectPointsManager : MonoBehaviour
     readonly Vector2Int TileWorldSize;
     readonly List<Vector3Int> TilemapPositions;
 
-    internal ConnectPointsManager(Vector3Int firstCell, Vector3Int lastCell, List<Vector3Int> tileWorldPositions, Vector2Int tileWorldSize)
+    internal ConnectPointsAlgorithm(Vector3Int firstCell, Vector3Int lastCell, List<Vector3Int> tileWorldPositions, Vector2Int tileWorldSize)
     {
         FirstCell = firstCell;
         LastCell = lastCell;
@@ -181,7 +181,7 @@ public class ConnectPointsManager : MonoBehaviour
         return tilesToDraw;
     }
 
-    internal ConnectPointsManager(Vector3Int firstCell, List<Vector3Int> tileWorldPositions, List<Vector3Int> tilemapPositions)
+    internal ConnectPointsAlgorithm(Vector3Int firstCell, List<Vector3Int> tileWorldPositions, List<Vector3Int> tilemapPositions)
     {
         FirstCell = firstCell;
         TilesPositionsOther = tileWorldPositions;

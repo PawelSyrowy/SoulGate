@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
 using Vector3 = UnityEngine.Vector3;
 
-public class TilemapSpawner : MonoBehaviour
+public class TilemapManager : MonoBehaviour
 {
     //test
     [SerializeField] Tilemap TilemapBusyTest;
@@ -19,7 +19,7 @@ public class TilemapSpawner : MonoBehaviour
     [SerializeField] Tilemap TilemapEmptyTest;
     [SerializeField] Tilemap TilemapBorderTest;
 
-    [SerializeField] internal Tilemap TilemapSafe;
+    Tilemap TilemapSafe;
     [SerializeField] Tilemap TilemapGhost;
     [SerializeField] Tilemap TilemapBorder; 
     [SerializeField] TileBase tileToSpawn;
@@ -35,11 +35,12 @@ public class TilemapSpawner : MonoBehaviour
     Vector3Int firstCell;
     Vector3Int lastCell;
 
-    internal void Setup(List<Vector3Int> tileWorldPositions, Vector2Int tileWorldSize, PlayerControl player)
+    internal void Setup(List<Vector3Int> tileWorldPositions, Vector2Int tileWorldSize, PlayerControl player, Tilemap tilemapSafe)
     {
         TileWorldPositions = tileWorldPositions;
         TileWorldSize = tileWorldSize;
         Player = player;
+        TilemapSafe = tilemapSafe;
     }
 
     void LateUpdate()
@@ -48,6 +49,7 @@ public class TilemapSpawner : MonoBehaviour
         {
             if (Enemy.HasCollisionWithGhostTile == true)
             {
+                GameHandler.DestroyedBlueTiles(Player);
                 DestroyGhostTiles();
                 Enemy.HasCollisionWithGhostTile = false;
                 if (Player != null)
@@ -79,7 +81,7 @@ public class TilemapSpawner : MonoBehaviour
         }
     }
 
-    private void DestroyGhostTiles()
+    internal void DestroyGhostTiles()
     {
         isDrawing = false;
         DestroyAllTiles(TilemapGhost);
@@ -104,13 +106,13 @@ public class TilemapSpawner : MonoBehaviour
         List<Vector3Int> pointsToDrawBorder = new();
         if (startedFromBorder && finishedOnBorder)
         {
-            ConnectPointsManager connectPointsManager = new(firstCell, lastCell, TileWorldPositions, TileWorldSize);
+            ConnectPointsAlgorithm connectPointsManager = new(firstCell, lastCell, TileWorldPositions, TileWorldSize);
             pointsToDrawBorder = connectPointsManager.FindWayBetweenPoints();
         }
         else if (finishedOnBorder != startedFromBorder)
         {
             Vector3Int cell = startedFromBorder ? firstCell : lastCell;
-            ConnectPointsManager connectPointsManager = new(cell, TileWorldPositions, GetAllTilesPositions(TilemapBorder));
+            ConnectPointsAlgorithm connectPointsManager = new(cell, TileWorldPositions, GetAllTilesPositions(TilemapBorder));
             pointsToDrawBorder = connectPointsManager.FindWayToBorder();
         }
         if (!Enemy.EnemyHasColisionWithTiles(pointsToDrawBorder))
@@ -121,7 +123,7 @@ public class TilemapSpawner : MonoBehaviour
         AddTiles(GetAllTilesPositions(TilemapGhost), TilemapBorder);
         ReplaceAllTiles(TilemapGhost, TilemapSafe);
 
-        ClosedShapesAlgorithm closedShapesAlgorithm = new(GetAllTilesPositions(TilemapBorder), -TileWorldPositions[1].x, -TileWorldPositions[1].y, TileWorldSize);
+        CloseShapesAlgorithm closedShapesAlgorithm = new(GetAllTilesPositions(TilemapBorder), -TileWorldPositions[1].x, -TileWorldPositions[1].y, TileWorldSize);
         List<List<Vector3Int>> pointsToFillShape = closedShapesAlgorithm.GetEmptyPositions(Enemy.GetEnemyPoint());
 
         AddTiles(pointsToFillShape[0], TilemapGhost);
@@ -198,7 +200,7 @@ public class TilemapSpawner : MonoBehaviour
         }
     }
 
-    private void DestroyAllTiles(Tilemap tilemap)
+    internal void DestroyAllTiles(Tilemap tilemap)
     {
         List<Vector3Int> positions = GetAllTilesPositions(tilemap);
 

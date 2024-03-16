@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4380984422593557580}
   - component: {fileID: 4666429932414573650}
   m_Layer: 0
-  m_Name: TilemapSpawner
+  m_Name: TilemapManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,10 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720f025015ea579479f0212479b5d667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TilemapBusyTest: {fileID: 0}
+  TilemapForbiddenTest: {fileID: 0}
+  TilemapEmptyTest: {fileID: 0}
+  TilemapBorderTest: {fileID: 0}
   TilemapSafe: {fileID: 0}
   TilemapGhost: {fileID: 0}
-  TilemapBackground: {fileID: 0}
   TilemapBorder: {fileID: 0}
   tileToSpawn: {fileID: 11400000, guid: e39a336f48bf9c14b9f03b6a85ae384a, type: 2}
   Enemy: {fileID: 0}
-  Player: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5677468130622522687}
   - component: {fileID: 2223418897904198901}
   m_Layer: 0
-  m_Name: WinningManager
+  m_Name: WinManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,4 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dbd881dfb70a614184bc61993818281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemapSpawner: {fileID: 0}

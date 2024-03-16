@@ -5,17 +5,24 @@ using UnityEngine.Tilemaps;
 
 public class GameHandler : MonoBehaviour
 {
-    [SerializeField] private WinningManager winningManager;
-    [SerializeField] private TilemapSpawner tilemapSpawner;
+    [SerializeField] private WinManager winManager;
+    [SerializeField] private TilemapManager tilemapManager;
     [SerializeField] private PlayerControl player;
     [SerializeField] private Tilemap tilemapBackground;
+    [SerializeField] private Tilemap tilemapSafe;
 
     private LevelGrid levelGrid;
     List<Vector3Int> TileWorldPositions;
     Vector2Int TileWorldSize;
 
+    private static GameHandler instance;
+    private static int score;
+
     private void Awake()
     {
+        instance = this;
+        InitializeStatic();
+
         TileWorldPositions = new List<Vector3Int>
         {
             new(-36, 17, 0),
@@ -30,11 +37,70 @@ public class GameHandler : MonoBehaviour
     {
         levelGrid = new LevelGrid(TileWorldSize.x, TileWorldSize.y);
 
-        player.Setup(tilemapBackground, levelGrid, winningManager);
+        player.Setup(tilemapBackground, levelGrid, tilemapManager);
         levelGrid.Setup(player);
 
-        tilemapSpawner.Setup(TileWorldPositions, TileWorldSize, player);
-        winningManager.Setup(tilemapSpawner, tilemapBackground);
+        tilemapManager.Setup(TileWorldPositions, TileWorldSize, player, tilemapSafe);
+        winManager.Setup(tilemapBackground, tilemapSafe, player);
+    }
 
+    public static int GetScore()
+    {
+        return score;
+    }
+
+    public static void AddScore()
+    {
+        score += 100;
+    }
+
+    public static void RemoveScore(int amount, PlayerControl player)
+    {
+        score -= amount;
+        if (score<0)
+        {
+            player.PlayerDied();
+        }
+    }
+
+    private static void InitializeStatic()
+    {
+        score = 1000;
+    }
+    
+    public static void ReloadScene()
+    {
+        Loader.Load(Loader.Scene.GameScene);
+    }
+
+    public static void GoToMainMenu()
+    {
+        Loader.Load(Loader.Scene.MainMenu);
+    }
+
+    public void PlayerNewLife()
+    {
+        if (score>=1000)
+        {
+            RemoveScore(1000, null);
+            player.NewLife();
+            GameOverWindow.HideStatic();
+        }
+    }
+
+    public static void PlayerDied(TilemapManager tilemapManager)
+    {
+        GameOverWindow.ShowStatic();
+        tilemapManager.DestroyGhostTiles();
+    }
+
+    public static void DestroyedBlueTiles(PlayerControl player)
+    {
+        RemoveScore(500, player);
+    }
+
+    public static void PlayerWin()
+    {
+        WinGameWindow.ShowStatic();
     }
 }
