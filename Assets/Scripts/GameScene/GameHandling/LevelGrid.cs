@@ -8,20 +8,15 @@ public class LevelGrid
 {
     private Vector2Int foodGridPosition;
     private GameObject foodGameObject;
-    private int width;
-    private int height;
-    private PlayerControl player;
+    private readonly int width;
+    private readonly int height;
+    private readonly PlayerControl player;
 
-    public LevelGrid(int width, int height)
+    public LevelGrid(int width, int height, PlayerControl player)
     {
         this.width = width;
         this.height = height;
-    }
-
-    public void Setup(PlayerControl player)
-    {
         this.player = player;
-
         SpawnFood();
     }
 
@@ -34,10 +29,11 @@ public class LevelGrid
 
         foodGameObject = new GameObject("Food", typeof(SpriteRenderer));
         foodGameObject.GetComponent<SpriteRenderer>().sprite = GameAssets.i.foodSprite;
+        foodGameObject.GetComponent<SpriteRenderer>().material.color = Color.green;
         foodGameObject.transform.position = new Vector3(foodGridPosition.x, foodGridPosition.y);
     }
 
-    public void SnakeMoved(Vector2Int playerGridPosition)
+    public void PlayerMoved(Vector2Int playerGridPosition)
     {
         Vector2 playerGridPositionBig = new Vector2Int ((int)math.floor(playerGridPosition.x / 3), (int)math.floor(playerGridPosition.y / 3));
         Vector2 foodGridPositionBig = new Vector2Int((int)math.floor(foodGridPosition.x / 3), (int)math.floor(foodGridPosition.y / 3));

@@ -165,7 +165,6 @@ MonoBehaviour:
   moveSpeed: 40
   dX: 0
   dY: 0
-  tilemapBackground: {fileID: 0}
 --- !u!1 &8635195623160347366
 GameObject:
   m_ObjectHideFlags: 0

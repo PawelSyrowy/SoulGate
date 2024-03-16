@@ -5,40 +5,30 @@ using UnityEngine.Tilemaps;
 
 public class WinManager : MonoBehaviour
 {
-    Tilemap TilemapBackground;
-    Tilemap TilemapSafe;
-    PlayerControl Player;
-
     float backgroundTilesAmount;
     float safeTilesAmount;
     float winPercentage = 0;
     bool win = false;
 
-    internal void Setup(Tilemap tilemapBackground, Tilemap tilemapSafe, PlayerControl player)
+    public void Setup(Tilemap tilemapBackground)
     {
-        TilemapBackground = tilemapBackground;
-        TilemapSafe = tilemapSafe;
-        Player = player;
-    }
-
-    private void Start()
-    {
-        int tileCount = CountTiles(TilemapBackground);
+        int tileCount = CountTiles(tilemapBackground);
         backgroundTilesAmount = (float)tileCount;
     }
-    private void LateUpdate()
+
+    internal bool CheckWin(Tilemap tilemapSafe)
     {
         if (!win)
         {
-            int tileCount = CountTiles(TilemapSafe);
+            int tileCount = CountTiles(tilemapSafe);
             safeTilesAmount = (float)tileCount;
             winPercentage = safeTilesAmount / backgroundTilesAmount * 100;
             if (winPercentage > 80)
             {
                 win = true;
-                Player.PlayerWin();
             }
         }
+        return win;
     }
 
     int CountTiles(Tilemap tilemap)

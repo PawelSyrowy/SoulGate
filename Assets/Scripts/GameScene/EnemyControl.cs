@@ -12,21 +12,12 @@ public class EnemyControl : MonoBehaviour
     public float dX = 0;
     public float dY = 0;
     Rigidbody2D rb;
-    [SerializeField] Tilemap tilemapBackground;
 
     internal bool HasCollisionWithGhostTile = false;
 
     void Awake()
     {
-        Random rand = new Random();
-        double x = rand.NextDouble() * 2 - 1;
-        double y = CalculateY(x);
-        dX = (float)x;
-        dY = (float)y;
-        rb = GetComponent<Rigidbody2D>();
-
-        Vector2 movement = new(dX, dY);
-        rb.velocity = moveSpeed * movement;
+        StartMovement();
     }
 
     void Update()
@@ -36,6 +27,19 @@ public class EnemyControl : MonoBehaviour
             Vector2 movement = new(dX, dY);
             rb.velocity = moveSpeed * movement;
         }
+    }
+
+    internal void StartMovement()
+    {
+        Random rand = new();
+        double x = rand.NextDouble() * 2 - 1;
+        double y = CalculateY(x);
+        dX = (float)x;
+        dY = (float)y;
+        rb = GetComponent<Rigidbody2D>();
+
+        Vector2 movement = new(dX, dY);
+        rb.velocity = moveSpeed * movement;
     }
 
     public static double CalculateY(double x)
@@ -56,9 +60,9 @@ public class EnemyControl : MonoBehaviour
         }
     }
 
-    internal bool EnemyHasColisionWithTiles(List<Vector3Int> tiles)
+    internal bool EnemyHasColisionWithTiles(List<Vector3Int> tiles, Tilemap tilemapBackground)
     {
-        Vector3 cellPositionConverted = GetEnemyPoint();
+        Vector3 cellPositionConverted = GetEnemyPoint(tilemapBackground);
 
         if (cellPositionConverted != null)
         {
@@ -73,7 +77,7 @@ public class EnemyControl : MonoBehaviour
         return false;
     }
 
-    internal Vector3 GetEnemyPoint()
+    internal Vector3 GetEnemyPoint(Tilemap tilemapBackground)
     {
         Vector3 enemyCenter = transform.position;
         Vector3Int cellPosition = tilemapBackground.WorldToCell(enemyCenter);

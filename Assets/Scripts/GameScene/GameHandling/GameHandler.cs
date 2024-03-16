@@ -5,18 +5,24 @@ using UnityEngine.Tilemaps;
 
 public class GameHandler : MonoBehaviour
 {
+    [SerializeField] internal Tilemap tilemapBackground;
+    [SerializeField] internal Tilemap tilemapSafe;
+    [SerializeField] internal Tilemap tilemapBorder;
+    [SerializeField] internal Tilemap tilemapGhost;
+    [SerializeField] internal TileBase tileToSpawn;
+
     [SerializeField] private WinManager winManager;
-    [SerializeField] private TilemapManager tilemapManager;
+    [SerializeField] private TilemapManager tilemapManager; 
     [SerializeField] private PlayerControl player;
-    [SerializeField] private Tilemap tilemapBackground;
-    [SerializeField] private Tilemap tilemapSafe;
+    [SerializeField] private EnemyControl enemy;
 
     private LevelGrid levelGrid;
-    List<Vector3Int> TileWorldPositions;
-    Vector2Int TileWorldSize;
+    
+    internal static List<Vector3Int> TileWorldPositions;
+    internal static Vector2Int TileWorldSize;
+    private static int score;
 
     private static GameHandler instance;
-    private static int score;
 
     private void Awake()
     {
@@ -35,13 +41,11 @@ public class GameHandler : MonoBehaviour
 
     private void Start()
     {
-        levelGrid = new LevelGrid(TileWorldSize.x, TileWorldSize.y);
+        levelGrid = new LevelGrid(TileWorldSize.x, TileWorldSize.y, player);
 
-        player.Setup(tilemapBackground, levelGrid, tilemapManager);
-        levelGrid.Setup(player);
-
-        tilemapManager.Setup(TileWorldPositions, TileWorldSize, player, tilemapSafe);
-        winManager.Setup(tilemapBackground, tilemapSafe, player);
+        player.Setup(levelGrid, tilemapManager);
+        tilemapManager.Setup(tilemapBackground, tilemapSafe, tilemapBorder, tilemapGhost, tileToSpawn, winManager, player, enemy);
+        winManager.Setup(tilemapBackground);
     }
 
     public static int GetScore()
@@ -84,6 +88,7 @@ public class GameHandler : MonoBehaviour
         {
             RemoveScore(1000, null);
             player.NewLife();
+            enemy.StartMovement();
             GameOverWindow.HideStatic();
         }
     }
@@ -92,11 +97,6 @@ public class GameHandler : MonoBehaviour
     {
         GameOverWindow.ShowStatic();
         tilemapManager.DestroyGhostTiles();
-    }
-
-    public static void DestroyedBlueTiles(PlayerControl player)
-    {
-        RemoveScore(500, player);
     }
 
     public static void PlayerWin()

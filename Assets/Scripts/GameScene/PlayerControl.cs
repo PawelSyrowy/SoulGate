@@ -8,7 +8,6 @@ public class PlayerControl : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
     [SerializeField] SpriteRenderer playerRenderer;
-    private Tilemap tilemapBackground;
     private LevelGrid levelGrid;
     private TilemapManager tilemapManager;
 
@@ -28,9 +27,8 @@ public class PlayerControl : MonoBehaviour
 
     internal State state = State.Alive;
 
-    public void Setup(Tilemap tilemapBackground, LevelGrid levelGrid, TilemapManager tilemapManager)
+    public void Setup(LevelGrid levelGrid, TilemapManager tilemapManager)
     {
-        this.tilemapBackground = tilemapBackground;
         this.levelGrid = levelGrid;
         this.tilemapManager = tilemapManager;
     }
@@ -46,8 +44,8 @@ public class PlayerControl : MonoBehaviour
             case State.Dead:
                 break;
             case State.Win:
-                HandleMovement()
-                ; break;
+                HandleMovement();
+                break;
         }
     }
 
@@ -58,7 +56,7 @@ public class PlayerControl : MonoBehaviour
         Vector2 movement = new(dX, dY);
         rb.velocity = movement * moveSpeed;
 
-        levelGrid.SnakeMoved(GetGridPosition());
+        levelGrid.PlayerMoved(GetGridPosition());
     }
 
     private void HandleLogic()
@@ -85,9 +83,9 @@ public class PlayerControl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (state == State.Alive)
         {
-            if (state == State.Alive)
+            if (collision.gameObject.CompareTag("Enemy"))
             {
                 PlayerDied();
             }
@@ -102,8 +100,8 @@ public class PlayerControl : MonoBehaviour
     internal void CheckIsPlayerOnBackground()
     {
         Vector3 playerCenter = transform.position;
-        Vector3Int cellPosition = tilemapBackground.WorldToCell(playerCenter);
-        TileBase tile = tilemapBackground.GetTile(cellPosition);
+        Vector3Int cellPosition = tilemapManager.TilemapBackground.WorldToCell(playerCenter);
+        TileBase tile = tilemapManager.TilemapBackground.GetTile(cellPosition);
         if (tile != null)
         {
             IsOnBackground = true;
@@ -181,6 +179,5 @@ public class PlayerControl : MonoBehaviour
     {
         playerRenderer.color = new Color(0.05f, 0.4f, 0.56f);
         state = State.Win;
-        GameHandler.PlayerWin();
     }
 }
