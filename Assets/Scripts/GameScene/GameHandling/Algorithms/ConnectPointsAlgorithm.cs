@@ -193,7 +193,7 @@ public class ConnectPointsAlgorithm : MonoBehaviour
         List<Vector3Int> borderTiles = new();
         foreach (var tile in TilemapPositions)
         {
-            if (tile.x == TilemapPositions[1].x || tile.x == TilemapPositions[3].x || tile.y == TilemapPositions[3].y || tile.y == TilemapPositions[1].y)
+            if (tile.x == TilesPositionsOther[1].x || tile.x == TilesPositionsOther[3].x || tile.y == TilesPositionsOther[3].y || tile.y == TilesPositionsOther[1].y)
             {
                 borderTiles.Add(tile);
             }
@@ -218,20 +218,20 @@ public class ConnectPointsAlgorithm : MonoBehaviour
             int directionX = 0;
             int directionY = 0;
 
-            if (currentPosition.x == TilemapPositions[3].x)
+            if (currentPosition.x == TilesPositionsOther[3].x)
             {
                 directionY = -clockwise;
             }
-            else if (currentPosition.x == TilemapPositions[1].x)
+            else if (currentPosition.x == TilesPositionsOther[1].x)
             {
                 directionY = clockwise;
             }
 
-            if (currentPosition.y == TilemapPositions[3].y)
+            if (currentPosition.y == TilesPositionsOther[3].y)
             {
                 directionX = clockwise;
             }
-            else if (currentPosition.y == TilemapPositions[1].y)
+            else if (currentPosition.y == TilesPositionsOther[1].y)
             {
                 directionX = -clockwise;
             }
