@@ -18,14 +18,16 @@ public class PlayerControl : MonoBehaviour
     internal bool IsDrawing = false;
     internal bool DrawingBan = true;
 
+    internal State state = State.Waiting;
+    State stateResume;
     internal enum State
     {
-        Alive,
+        Playing,
+        Waiting,
         Dead,
         Win,
+        Paused,
     }
-
-    internal State state = State.Alive;
 
     public void Setup(LevelGrid levelGrid, TilemapManager tilemapManager)
     {
@@ -37,14 +39,19 @@ public class PlayerControl : MonoBehaviour
     {
         switch (state)
         {
-            case State.Alive:
+            case State.Playing:
                 HandleMovement();
                 HandleLogic();
+                break;
+            case State.Waiting:
+                HandleFirstMove();
                 break;
             case State.Dead:
                 break;
             case State.Win:
                 HandleMovement();
+                break;
+            case State.Paused:
                 break;
         }
     }
@@ -62,14 +69,16 @@ public class PlayerControl : MonoBehaviour
     private void HandleLogic()
     {
         CheckIsPlayerOnBackground();
+        PlayerColor();
+    }
 
-        if (DrawingBan == true)
+    private void HandleFirstMove()
+    {
+        if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape))
         {
-            playerRenderer.color = Color.red;
-        }
-        else
-        {
-            playerRenderer.color = Color.yellow;
+            state = State.Playing;
+            PlayerUnfreeze();
+            tilemapManager.Enemy.StartMovement();
         }
     }
 
@@ -83,7 +92,7 @@ public class PlayerControl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (state == State.Alive)
+        if (state == State.Playing)
         {
             if (collision.gameObject.CompareTag("Enemy"))
             {
@@ -162,22 +171,70 @@ public class PlayerControl : MonoBehaviour
 
     internal void NewLife()
     {
-        state = State.Alive;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        state = State.Waiting;
+        PlayerColor();
         DrawingBan = true;
     }
 
     internal void PlayerDied()
     {
         state = State.Dead;
-        playerRenderer.color = Color.gray;
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        PlayerColor();
+        PlayerFreeze();
         GameHandler.PlayerDied(tilemapManager);
     }
 
     internal void PlayerWin()
     {
-        playerRenderer.color = new Color(0.05f, 0.4f, 0.56f);
         state = State.Win;
+        PlayerColor();
+    }
+
+    internal void PlayerPause()
+    {
+        stateResume = state;
+        state = State.Paused;
+        PlayerFreeze();
+        tilemapManager.Enemy.EnemyStopped();
+    }
+
+    internal void PlayerResume()
+    {
+        state = stateResume;
+        PlayerUnfreeze();
+        tilemapManager.Enemy.EnemyMoving();
+    }
+
+    void PlayerFreeze()
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    void PlayerUnfreeze()
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    void PlayerColor()
+    {
+        if (state==State.Playing)
+        {
+            if (DrawingBan == true)
+            {
+                playerRenderer.color = Color.red;
+            }
+            else
+            {
+                playerRenderer.color = Color.yellow;
+            }
+        }
+        else if (state==State.Win || state==State.Waiting)
+        {
+            playerRenderer.color = new Color(0.05f, 0.4f, 0.56f);
+        }
+        else if (state==State.Dead)
+        {
+            playerRenderer.color = Color.gray;
+        }
     }
 }

@@ -48,7 +48,7 @@ public class TilemapManager : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Enemy!=null)
+        if (Player.state.ToString() == "Playing")
         {
             if (Enemy.HasCollisionWithGhostTile == true)
             {
@@ -60,9 +60,8 @@ public class TilemapManager : MonoBehaviour
                     Player.DrawingBan = true;
                 }
             }
-        }
-        if (Player != null && Player.state.ToString()=="Alive")
-        {
+
+
             Player.CheckCanPlayerDraw(IsPlayerOnGhostTiles(), IsPlayerOnSafeTiles());
 
             if (Player.CheckPlayerCanFinishDrawing(IsPlayerOnSafeTiles()))

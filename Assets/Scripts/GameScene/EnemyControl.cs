@@ -14,13 +14,28 @@ public class EnemyControl : MonoBehaviour
     Rigidbody2D rb;
 
     internal bool HasCollisionWithGhostTile = false;
+    Vector2 velocityResume;
 
-    void Awake()
+    State state = State.Moving;
+    internal enum State
     {
-        StartMovement();
+        Moving,
+        Stopped,
     }
 
     void Update()
+    {
+        switch (state)
+        {
+            case State.Moving:
+                CheckMovement();
+                break;
+            case State.Stopped:
+                break;
+        }
+    }
+
+    void CheckMovement()
     {
         if (rb.velocity.x == 0 || rb.velocity.y == 0)
         {
@@ -54,9 +69,12 @@ public class EnemyControl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("TilemapGhost"))
+        if (state == State.Moving)
         {
-            HasCollisionWithGhostTile |= true;
+            if (collision.gameObject.CompareTag("TilemapGhost"))
+            {
+                HasCollisionWithGhostTile |= true;
+            }
         }
     }
 
@@ -82,5 +100,19 @@ public class EnemyControl : MonoBehaviour
         Vector3 enemyCenter = transform.position;
         Vector3Int cellPosition = tilemapBackground.WorldToCell(enemyCenter);
         return new Vector3(cellPosition.x, cellPosition.y, cellPosition.z);
+    }
+
+    internal void EnemyMoving()
+    {
+        state= State.Moving;
+        rb.velocity = velocityResume;
+        velocityResume = Vector2.zero;
+    }
+
+    internal void EnemyStopped()
+    {
+        state=State.Stopped;
+        velocityResume = new Vector2(rb.velocity.x, rb.velocity.y);
+        rb.velocity = Vector2.zero;
     }
 }

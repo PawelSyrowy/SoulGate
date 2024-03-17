@@ -21,8 +21,19 @@ public class GameHandler : MonoBehaviour
     internal static List<Vector3Int> TileWorldPositions;
     internal static Vector2Int TileWorldSize;
     private static int score;
+    private static State state;
+
+    internal enum State
+    {
+        Paused,
+        Active,
+        Dead,
+        Win,
+    }
 
     private static GameHandler instance;
+
+    //TODO 1. Odbijanie wroga od zielonego pola, spawner dla wrogów, po¿eranie jedzenia, grafika, dŸwiêk, portowanie na androida
 
     private void Awake()
     {
@@ -48,6 +59,24 @@ public class GameHandler : MonoBehaviour
         winManager.Setup(tilemapBackground);
     }
 
+    private void Update()
+    {
+        if (state == State.Paused || state==State.Active)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (state == State.Paused)
+                {
+                    GameHandler.ResumeGame(player);
+                }
+                else
+                {
+                    GameHandler.PauseGame(player);
+                }
+            }
+        }
+    }
+
     public static int GetScore()
     {
         return score;
@@ -70,6 +99,7 @@ public class GameHandler : MonoBehaviour
     private static void InitializeStatic()
     {
         score = 1000;
+        state = State.Active;
     }
     
     public static void ReloadScene()
@@ -82,25 +112,41 @@ public class GameHandler : MonoBehaviour
         Loader.Load(Loader.Scene.MainMenu);
     }
 
+    public static void PauseGame(PlayerControl player)
+    {
+        PauseGameWindow.ShowStatic();
+        state = State.Paused;
+        player.PlayerPause();
+    }
+
+    public static void ResumeGame(PlayerControl player)
+    {
+        PauseGameWindow.HideStatic();
+        state= State.Active;
+        player.PlayerResume();
+    }
+
     public void PlayerNewLife()
     {
         if (score>=1000)
         {
             RemoveScore(1000, null);
             player.NewLife();
-            enemy.StartMovement();
+            state=State.Active;
             GameOverWindow.HideStatic();
         }
     }
 
     public static void PlayerDied(TilemapManager tilemapManager)
     {
+        state = State.Dead;
         GameOverWindow.ShowStatic();
         tilemapManager.DestroyGhostTiles();
     }
 
     public static void PlayerWin()
     {
+        state = State.Win;
         WinGameWindow.ShowStatic();
     }
 }
