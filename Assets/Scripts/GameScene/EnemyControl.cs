@@ -16,11 +16,14 @@ public class EnemyControl : MonoBehaviour
     internal bool HasCollisionWithGhostTile = false;
     Vector2 velocityResume;
 
-    State state = State.Moving;
+    State state = State.Waiting;
+    State stateResume;
+
     internal enum State
     {
         Moving,
         Stopped,
+        Waiting,
     }
 
     void Update()
@@ -31,6 +34,8 @@ public class EnemyControl : MonoBehaviour
                 CheckMovement();
                 break;
             case State.Stopped:
+                break;
+            case State.Waiting:
                 break;
         }
     }
@@ -55,6 +60,8 @@ public class EnemyControl : MonoBehaviour
 
         Vector2 movement = new(dX, dY);
         rb.velocity = moveSpeed * movement;
+
+        state = State.Moving;
     }
 
     public static double CalculateY(double x)
@@ -104,15 +111,23 @@ public class EnemyControl : MonoBehaviour
 
     internal void EnemyMoving()
     {
-        state= State.Moving;
-        rb.velocity = velocityResume;
-        velocityResume = Vector2.zero;
+        state = stateResume;
+        if (state == State.Moving)
+        {
+            rb.velocity = velocityResume;
+            velocityResume = Vector2.zero;
+        }
+
     }
 
     internal void EnemyStopped()
     {
+        stateResume = state;
         state=State.Stopped;
-        velocityResume = new Vector2(rb.velocity.x, rb.velocity.y);
-        rb.velocity = Vector2.zero;
+        if (stateResume==State.Moving)
+        {
+            velocityResume = new Vector2(rb.velocity.x, rb.velocity.y);
+            rb.velocity = Vector2.zero;
+        }
     }
 }

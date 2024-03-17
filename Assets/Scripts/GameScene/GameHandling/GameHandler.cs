@@ -20,7 +20,6 @@ public class GameHandler : MonoBehaviour
     
     internal static List<Vector3Int> TileWorldPositions;
     internal static Vector2Int TileWorldSize;
-    private static int score;
     private static State state;
 
     internal enum State
@@ -77,29 +76,10 @@ public class GameHandler : MonoBehaviour
         }
     }
 
-    public static int GetScore()
-    {
-        return score;
-    }
-
-    public static void AddScore()
-    {
-        score += 100;
-    }
-
-    public static void RemoveScore(int amount, PlayerControl player)
-    {
-        score -= amount;
-        if (score<0)
-        {
-            player.PlayerDied();
-        }
-    }
-
     private static void InitializeStatic()
     {
-        score = 1000;
         state = State.Active;
+        Score.InitializeStatic();
     }
     
     public static void ReloadScene()
@@ -122,15 +102,15 @@ public class GameHandler : MonoBehaviour
     public static void ResumeGame(PlayerControl player)
     {
         PauseGameWindow.HideStatic();
-        state= State.Active;
+        state = State.Active;
         player.PlayerResume();
     }
 
     public void PlayerNewLife()
     {
-        if (score>=1000)
+        if (Score.GetScore()>= 1000)
         {
-            RemoveScore(1000, null);
+            Score.RemoveScore(1000, null);
             player.NewLife();
             state=State.Active;
             GameOverWindow.HideStatic();
@@ -148,5 +128,6 @@ public class GameHandler : MonoBehaviour
     {
         state = State.Win;
         WinGameWindow.ShowStatic();
+        Score.TrySetNewHighscore();
     }
 }

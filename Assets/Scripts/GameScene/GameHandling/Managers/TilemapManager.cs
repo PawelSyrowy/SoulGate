@@ -48,12 +48,15 @@ public class TilemapManager : MonoBehaviour
 
     void LateUpdate()
     {
+        bool WarningBool = false;
+
         if (Player.state.ToString() == "Playing")
         {
             if (Enemy.HasCollisionWithGhostTile == true)
             {
-                GameHandler.RemoveScore(500, Player);
+                Score.RemoveScore(500, Player);
                 DestroyGhostTiles();
+                WarningBool = true;
                 Enemy.HasCollisionWithGhostTile = false;
                 if (Player != null)
                 {
@@ -66,6 +69,10 @@ public class TilemapManager : MonoBehaviour
 
             if (Player.CheckPlayerCanFinishDrawing(IsPlayerOnSafeTiles()))
             {
+                if (WarningBool)
+                {
+                    Debug.LogError("Tak nigdy nie powinno byæ!");
+                }
                 FinishDrawing();
                 if (WinManager.CheckWin(TilemapSafe))
                 {
