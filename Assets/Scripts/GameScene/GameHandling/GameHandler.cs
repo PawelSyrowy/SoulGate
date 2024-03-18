@@ -32,7 +32,7 @@ public class GameHandler : MonoBehaviour
 
     private static GameHandler instance;
 
-    //TODO 1. Odbijanie wroga od zielonego pola, spawner dla wrogów, po¿eranie jedzenia, grafika, dŸwiêk, portowanie na androida
+    //TODO 1. Odbijanie wroga od zielonego pola, spawner dla wrogów, po¿eranie jedzenia, grafika, dŸwiêk, portowanie na androida, rozdzielczosc
 
     private void Awake()
     {

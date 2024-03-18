@@ -41,6 +41,7 @@ public class PlayerControl : MonoBehaviour
         {
             case State.Playing:
                 HandleMovement();
+                levelGrid.PlayerMoved(GetGridPosition());
                 HandleLogic();
                 break;
             case State.Waiting:
@@ -62,8 +63,6 @@ public class PlayerControl : MonoBehaviour
         float dY = Input.GetAxis("Vertical");
         Vector2 movement = new(dX, dY);
         rb.velocity = movement * moveSpeed;
-
-        levelGrid.PlayerMoved(GetGridPosition());
     }
 
     private void HandleLogic()

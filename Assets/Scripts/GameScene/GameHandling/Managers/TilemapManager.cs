@@ -8,8 +8,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEditor.PlayerSettings;
 using Vector3 = UnityEngine.Vector3;
 
 public class TilemapManager : MonoBehaviour

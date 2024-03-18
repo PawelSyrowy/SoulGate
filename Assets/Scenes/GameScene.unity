@@ -886,6 +886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8486fa9ed7e334ab6bff790f32d432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeBtnImage: {fileID: 144170276}
 --- !u!1 &432152588
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,7 +1456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b70222cc87cfa4fbb984d52a68bb8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snakeHeadSprite: {fileID: 0}
   foodSprite: {fileID: -2413806693520163455, guid: 9da5af6ac547cea4fb7cefeaa3695472, type: 3}
 --- !u!114 &901755015 stripped
 MonoBehaviour:
