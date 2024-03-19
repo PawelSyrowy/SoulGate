@@ -42,6 +42,7 @@ public class LevelGrid
             Object.Destroy(foodGameObject);
             SpawnFood();
             Score.AddScore();
+            SoundManager.PlaySound(SoundManager.Sound.Food);
         }
     }
 }

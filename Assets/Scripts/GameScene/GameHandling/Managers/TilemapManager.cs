@@ -60,6 +60,7 @@ public class TilemapManager : MonoBehaviour
                 {
                     Player.DrawingBan = true;
                 }
+                SoundManager.PlaySound(SoundManager.Sound.Hurt);
             }
 
 
@@ -76,6 +77,10 @@ public class TilemapManager : MonoBehaviour
                 {
                     Player.PlayerWin();
                     GameHandler.PlayerWin();
+                }
+                else
+                {
+                    SoundManager.PlaySound(SoundManager.Sound.Complete);
                 }
             }
 

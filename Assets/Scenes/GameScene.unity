@@ -1457,6 +1457,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodSprite: {fileID: -2413806693520163455, guid: 9da5af6ac547cea4fb7cefeaa3695472, type: 3}
+  soundAudioClipArray:
+  - sound: 0
+    audioClip: {fileID: 8300000, guid: 458073aa579f8c34e8d4af7046733468, type: 3}
+  - sound: 1
+    audioClip: {fileID: 8300000, guid: f8e5d54be5b701746b8b71c671c88a57, type: 3}
+  - sound: 2
+    audioClip: {fileID: 8300000, guid: e8be0b9659f40b746948ff93843e2bbc, type: 3}
+  - sound: 3
+    audioClip: {fileID: 8300000, guid: c08ec3563a22abb419be5b45fdad4f13, type: 3}
+  - sound: 4
+    audioClip: {fileID: 8300000, guid: 3818a1d2058adfd468815df14766a2ac, type: 3}
+  - sound: 5
+    audioClip: {fileID: 8300000, guid: 2bf09f9ce15c9b143b427b4564e8bcc9, type: 3}
+  - sound: 6
+    audioClip: {fileID: 8300000, guid: dfc5fd07ce50e59418c653835d966517, type: 3}
+  - sound: 7
+    audioClip: {fileID: 8300000, guid: 56e4fa613eda37f43a0919f8e1e34234, type: 3}
+  - sound: 8
+    audioClip: {fileID: 8300000, guid: a2004740c69a264419fd97c134512a82, type: 3}
 --- !u!114 &901755015 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3875804641727950658, guid: 0104c04e95ef7e747a11ae2d806958a9, type: 3}
@@ -29379,7 +29398,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1830783917}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 244356097}
+        m_TargetAssemblyTypeName: GameHandler, Assembly-CSharp
+        m_MethodName: NextLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1830783917
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -32,8 +32,6 @@ public class GameHandler : MonoBehaviour
 
     private static GameHandler instance;
 
-    //TODO 1. Odbijanie wroga od zielonego pola, spawner dla wrogów, po¿eranie jedzenia, grafika, dŸwiêk, portowanie na androida, rozdzielczosc
-
     private void Awake()
     {
         instance = this;
@@ -81,15 +79,22 @@ public class GameHandler : MonoBehaviour
         state = State.Active;
         Score.InitializeStatic();
     }
-    
+
+    public static void NextLevel()
+    {
+        SoundManager.PlaySound(SoundManager.Sound.BadClick);
+    }
+
     public static void ReloadScene()
     {
         Loader.Load(Loader.Scene.GameScene);
+        SoundManager.PlaySound(SoundManager.Sound.Click);
     }
 
     public static void GoToMainMenu()
     {
         Loader.Load(Loader.Scene.MainMenu);
+        SoundManager.PlaySound(SoundManager.Sound.Click);
     }
 
     public static void PauseGame(PlayerControl player)
@@ -114,6 +119,11 @@ public class GameHandler : MonoBehaviour
             player.NewLife();
             state=State.Active;
             GameOverWindow.HideStatic();
+            SoundManager.PlaySound(SoundManager.Sound.NewLife);
+        }
+        else
+        {
+            SoundManager.PlaySound(SoundManager.Sound.BadClick);
         }
     }
 
@@ -122,6 +132,7 @@ public class GameHandler : MonoBehaviour
         state = State.Dead;
         GameOverWindow.ShowStatic();
         tilemapManager.DestroyGhostTiles();
+        SoundManager.PlaySound(SoundManager.Sound.Die);
     }
 
     public static void PlayerWin()
@@ -129,5 +140,6 @@ public class GameHandler : MonoBehaviour
         state = State.Win;
         WinGameWindow.ShowStatic();
         Score.TrySetNewHighscore();
+        SoundManager.PlaySound(SoundManager.Sound.Win);
     }
 }

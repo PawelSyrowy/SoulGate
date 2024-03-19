@@ -78,6 +78,7 @@ public class PlayerControl : MonoBehaviour
             state = State.Playing;
             PlayerUnfreeze();
             tilemapManager.Enemy.StartMovement();
+            SoundManager.PlaySound(SoundManager.Sound.Start);
         }
     }
 
