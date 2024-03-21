@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
+using static UnityEngine.EventSystems.EventTrigger;
 using Vector3 = UnityEngine.Vector3;
 
 public class TilemapManager : MonoBehaviour
@@ -22,15 +23,16 @@ public class TilemapManager : MonoBehaviour
     Vector2Int TileWorldSize;
     WinManager WinManager;
     PlayerControl Player;
-    internal EnemyControl Enemy;
+    internal EnemyManager EnemyManager;
 
     bool isDrawing = false;
     bool startedFromBorder = false;
     bool finishedOnBorder = false;
+    bool CollisionWithGhostTile = false;
     Vector3Int firstCell;
     Vector3Int lastCell;
 
-    public void Setup(Tilemap tilemapBackground, Tilemap tilemapSafe, Tilemap tilemapBorder, Tilemap tilemapGhost, TileBase tileToSpawn, WinManager winManager, PlayerControl player, EnemyControl enemy)
+    public void Setup(Tilemap tilemapBackground, Tilemap tilemapSafe, Tilemap tilemapBorder, Tilemap tilemapGhost, TileBase tileToSpawn, WinManager winManager, PlayerControl player, EnemyManager enemyManager)
     {
         TileWorldPositions = GameHandler.TileWorldPositions;
         TileWorldSize = GameHandler.TileWorldSize; 
@@ -41,7 +43,7 @@ public class TilemapManager : MonoBehaviour
         TileToSpawn = tileToSpawn;
         WinManager = winManager;
         Player = player;
-        Enemy = enemy;
+        EnemyManager = enemyManager;
     }
 
     void LateUpdate()
@@ -50,12 +52,12 @@ public class TilemapManager : MonoBehaviour
 
         if (Player.state.ToString() == "Playing")
         {
-            if (Enemy.HasCollisionWithGhostTile == true)
+            if (CollisionWithGhostTile == true) //todo event
             {
                 Score.RemoveScore(500, Player);
                 DestroyGhostTiles();
                 WarningBool = true;
-                Enemy.HasCollisionWithGhostTile = false;
+                CollisionWithGhostTile = false;
                 if (Player != null)
                 {
                     Player.DrawingBan = true;
@@ -132,19 +134,27 @@ public class TilemapManager : MonoBehaviour
             ConnectPointsAlgorithm connectPointsManager = new(cell, TileWorldPositions, GetAllTilesPositions(TilemapBorder));
             pointsToDrawBorder = connectPointsManager.FindWayToBorder();
         }
-        if (!Enemy.EnemyHasColisionWithTiles(pointsToDrawBorder, TilemapBackground))
+        foreach (EnemyControl enemy in EnemyManager.enemyArray)
         {
-            AddTiles(pointsToDrawBorder, TilemapGhost);
+            if (!enemy.CheckColisionWithTiles(pointsToDrawBorder, TilemapBackground))
+            {
+                AddTiles(pointsToDrawBorder, TilemapGhost);
+            }
         }
 
         AddTiles(GetAllTilesPositions(TilemapGhost), TilemapBorder);
         ReplaceAllTiles(TilemapGhost, TilemapSafe);
 
         CloseShapesAlgorithm closedShapesAlgorithm = new(GetAllTilesPositions(TilemapBorder), -TileWorldPositions[1].x, -TileWorldPositions[1].y, TileWorldSize);
-        List<List<Vector3Int>> pointsToFillShape = closedShapesAlgorithm.GetEmptyPositions(Enemy.GetEnemyPoint(TilemapBackground));
+        List<Vector3Int> pointsToFillShape = closedShapesAlgorithm.GetEmptyPositions();
+        AddTiles(pointsToFillShape, TilemapGhost);
 
-        AddTiles(pointsToFillShape[0], TilemapGhost);
-        RemoveTiles(pointsToFillShape[1], TilemapGhost);
+        foreach (EnemyControl enemy in EnemyManager.enemyArray)
+        {
+            List<Vector3Int> pointsToUnfillShape = closedShapesAlgorithm.GetEnemyPositions(enemy.GetEnemyPoint(TilemapBackground));
+            RemoveTiles(pointsToUnfillShape, TilemapGhost);
+        }
+
         ReplaceAllTiles(TilemapGhost, TilemapSafe);
     }
 

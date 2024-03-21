@@ -13,8 +13,8 @@ public class EnemyControl : MonoBehaviour
     public float dY = 0;
     Rigidbody2D rb;
 
-    internal bool HasCollisionWithGhostTile = false;
     Vector2 velocityResume;
+    internal bool CollisionWithGhostTile = false;
 
     State state = State.Waiting;
     State stateResume;
@@ -49,21 +49,6 @@ public class EnemyControl : MonoBehaviour
         }
     }
 
-    internal void StartMovement()
-    {
-        Random rand = new();
-        double x = rand.NextDouble() * 2 - 1;
-        double y = CalculateY(x);
-        dX = (float)x;
-        dY = (float)y;
-        rb = GetComponent<Rigidbody2D>();
-
-        Vector2 movement = new(dX, dY);
-        rb.velocity = moveSpeed * movement;
-
-        state = State.Moving;
-    }
-
     public static double CalculateY(double x)
     {
         if (x < -1.0 || x > 1.0)
@@ -80,12 +65,12 @@ public class EnemyControl : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("TilemapGhost"))
             {
-                HasCollisionWithGhostTile |= true;
+                CollisionWithGhostTile |= true; //todo event
             }
         }
     }
 
-    internal bool EnemyHasColisionWithTiles(List<Vector3Int> tiles, Tilemap tilemapBackground)
+    internal bool CheckColisionWithTiles(List<Vector3Int> tiles, Tilemap tilemapBackground)
     {
         Vector3 cellPositionConverted = GetEnemyPoint(tilemapBackground);
 
@@ -109,6 +94,21 @@ public class EnemyControl : MonoBehaviour
         return new Vector3(cellPosition.x, cellPosition.y, cellPosition.z);
     }
 
+    internal void StartMovement()
+    {
+        Random rand = new();
+        double x = rand.NextDouble() * 2 - 1;
+        double y = CalculateY(x);
+        dX = (float)x;
+        dY = (float)y;
+        rb = GetComponent<Rigidbody2D>();
+
+        Vector2 movement = new(dX, dY);
+        rb.velocity = moveSpeed * movement;
+
+        state = State.Moving;
+    }
+    
     internal void EnemyMoving()
     {
         state = stateResume;
@@ -117,7 +117,6 @@ public class EnemyControl : MonoBehaviour
             rb.velocity = velocityResume;
             velocityResume = Vector2.zero;
         }
-
     }
 
     internal void EnemyStopped()

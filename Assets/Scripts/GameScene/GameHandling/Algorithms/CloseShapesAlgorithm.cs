@@ -29,13 +29,12 @@ public class CloseShapesAlgorithm : MonoBehaviour
         OffsetX = offsetX + 1;
         OffsetY = offsetY + 1;
         TileWorldSize = tileWorldSize;
-    }
-
-    internal List<List<Vector3Int>> GetEmptyPositions(Vector3 enemyPoint)
-    {
         width = TileWorldSize.x + 3;
         height = TileWorldSize.y + 3;
+    }
 
+    internal List<Vector3Int> GetEmptyPositions()
+    {
         grid = new bool[width, height];
         foreach (Vector3Int position in Positions)
         {
@@ -45,6 +44,11 @@ public class CloseShapesAlgorithm : MonoBehaviour
         FloodFill(Point.Empty);
         List<Vector3Int> EmptyPositions = PrintGrid()[0];
 
+        return EmptyPositions;
+    }
+
+    internal List<Vector3Int> GetEnemyPositions(Vector3 enemyPoint)
+    {
         grid = new bool[width, height];
         foreach (Vector3Int position in Positions)
         {
@@ -54,15 +58,7 @@ public class CloseShapesAlgorithm : MonoBehaviour
         FloodFill(new Point(enemyPointConverted.x + OffsetX, enemyPointConverted.y + OffsetY));
         List<Vector3Int> NegativePositions = PrintGrid()[1];
 
-        List<List<Vector3Int>> positions = new()
-        {
-            new(),
-            new()
-        };
-        positions[0] = EmptyPositions;
-        positions[1] = NegativePositions;
-
-        return positions;
+        return NegativePositions;
     }
 
     List<List<Vector3Int>> PrintGrid()

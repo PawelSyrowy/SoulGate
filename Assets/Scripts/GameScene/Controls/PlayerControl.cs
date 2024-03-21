@@ -77,7 +77,7 @@ public class PlayerControl : MonoBehaviour
         {
             state = State.Playing;
             PlayerUnfreeze();
-            tilemapManager.Enemy.StartMovement();
+            tilemapManager.EnemyManager.AllEnemyStart();
             SoundManager.PlaySound(SoundManager.Sound.Start);
         }
     }
@@ -195,14 +195,14 @@ public class PlayerControl : MonoBehaviour
         stateResume = state;
         state = State.Paused;
         PlayerFreeze();
-        tilemapManager.Enemy.EnemyStopped();
+        tilemapManager.EnemyManager.AllEnemyStop();
     }
 
     internal void PlayerResume()
     {
         state = stateResume;
         PlayerUnfreeze();
-        tilemapManager.Enemy.EnemyMoving();
+        tilemapManager.EnemyManager.AllEnemyMove();
     }
 
     void PlayerFreeze()

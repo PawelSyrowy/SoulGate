@@ -11,6 +11,7 @@ public static class Loader
         GameScene,
         Loading,
         MainMenu,
+        Level2,
     }
 
     private static Action loaderCallbackAction;

@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class GameHandler : MonoBehaviour
 {
+
+    // todo 1. Retry Button i Next button do odpowiednich scen, zmieniæ nazwe level1, nauczyæ siê eventy i zrobic dla player dead i blue tiles destroy, highscore dla ka¿dej sceny osobny
     [SerializeField] internal Tilemap tilemapBackground;
     [SerializeField] internal Tilemap tilemapSafe;
     [SerializeField] internal Tilemap tilemapBorder;
@@ -14,7 +16,7 @@ public class GameHandler : MonoBehaviour
     [SerializeField] private WinManager winManager;
     [SerializeField] private TilemapManager tilemapManager; 
     [SerializeField] private PlayerControl player;
-    [SerializeField] private EnemyControl enemy;
+    [SerializeField] private EnemyManager enemyManager;
 
     private LevelGrid levelGrid;
     
@@ -52,7 +54,7 @@ public class GameHandler : MonoBehaviour
         levelGrid = new LevelGrid(TileWorldSize.x, TileWorldSize.y, player);
 
         player.Setup(levelGrid, tilemapManager);
-        tilemapManager.Setup(tilemapBackground, tilemapSafe, tilemapBorder, tilemapGhost, tileToSpawn, winManager, player, enemy);
+        tilemapManager.Setup(tilemapBackground, tilemapSafe, tilemapBorder, tilemapGhost, tileToSpawn, winManager, player, enemyManager);
         winManager.Setup(tilemapBackground);
     }
 
@@ -82,6 +84,7 @@ public class GameHandler : MonoBehaviour
 
     public static void NextLevel()
     {
+        Loader.Load(Loader.Scene.Level2);
         SoundManager.PlaySound(SoundManager.Sound.BadClick);
     }
 
