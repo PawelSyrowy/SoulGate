@@ -51,7 +51,7 @@ public class TilemapManager : MonoBehaviour
 
     private void _OnCollisionWithGhostTile(object sender, EventArgs e)
     {
-        Score.RemoveScore(500, Player);
+        Score.RemoveScore(100, Player);
         DestroyGhostTiles();
         if (Player != null)
         {

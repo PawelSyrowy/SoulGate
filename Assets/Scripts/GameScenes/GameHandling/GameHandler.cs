@@ -69,7 +69,7 @@ public class GameHandler : MonoBehaviour
 
         player.Setup(levelGrid, tilemapManager);
         tilemapManager.Setup(tilemapBackground, tilemapSafe, tilemapBorder, tilemapGhost, tileToSpawn, winManager, player, enemyManager);
-        winManager.Setup(tilemapBackground);
+        winManager.Setup(tilemapBackground, levelConfiguration.WinExpectation);
     }
 
     private void Update()

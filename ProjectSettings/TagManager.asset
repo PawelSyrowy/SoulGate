@@ -14,16 +14,16 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Hero
+  - 
   - Water
   - UI
-  - Barrier
+  - Hero
   - Enemy
-  - TilemapSafe
-  - TilemapBorder
+  - 
+  - Barrier
   - TilemapGhost
-  - 
-  - 
+  - TilemapBorder
+  - TilemapSafe
   - 
   - 
   - 
@@ -50,18 +50,18 @@ TagManager:
   - name: Hero
     uniqueID: 703878727
     locked: 0
-  - name: Barrier
+  - name: Enemy
     uniqueID: 4228252407
     locked: 0
-  - name: Enemy
+  - name: Barrier
     uniqueID: 1924650043
     locked: 0
-  - name: TilemapSafe
+  - name: TilemapGhost
     uniqueID: 3838961745
     locked: 0
   - name: TilemapBorder
     uniqueID: 1269697663
     locked: 0
-  - name: TilemapGhost
-    uniqueID: 3164963501
+  - name: TilemapSafe
+    uniqueID: 1706793447
     locked: 0

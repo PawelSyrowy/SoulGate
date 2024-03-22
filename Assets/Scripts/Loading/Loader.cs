@@ -13,6 +13,8 @@ public static class Loader
         GameScene,
         Level1,
         Level2,
+        Level3,
+        Level4,
     }
 
     private static Action loaderCallbackAction;

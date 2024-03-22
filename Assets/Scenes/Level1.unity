@@ -582,7 +582,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNumber: 1
-  MaxLevel: 2
+  MaxLevel: 4
+  WinExpectation: 60
 --- !u!1001 &309022975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28701,7 +28702,7 @@ GameObject:
   - component: {fileID: 1494986787}
   - component: {fileID: 1494986790}
   - component: {fileID: 1494986789}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Tilemap_Border
   m_TagString: TilemapBorder
   m_Icon: {fileID: 0}
@@ -29086,11 +29087,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 272218036995416926, guid: 0104c04e95ef7e747a11ae2d806958a9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 64.65
+      value: 34.6
       objectReference: {fileID: 0}
     - target: {fileID: 272218036995416926, guid: 0104c04e95ef7e747a11ae2d806958a9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.5
+      value: -2.1
       objectReference: {fileID: 0}
     - target: {fileID: 272218036995416926, guid: 0104c04e95ef7e747a11ae2d806958a9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -30293,7 +30294,7 @@ TilemapCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 1911
+    m_Bits: 1975
   m_ForceReceiveLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -30627,7 +30628,7 @@ GameObject:
   - component: {fileID: 2139189041}
   - component: {fileID: 2139189040}
   - component: {fileID: 2139189042}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Tilemap_Safe
   m_TagString: TilemapSafe
   m_Icon: {fileID: 0}
@@ -30755,7 +30756,7 @@ TilemapCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 1975
   m_ForceReceiveLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -30786,11 +30787,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6798859752707701775, guid: bdd387c4c7cd3b243b3ca24e1761a3c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.65
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6798859752707701775, guid: bdd387c4c7cd3b243b3ca24e1761a3c8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.22
+      value: 17.4
       objectReference: {fileID: 0}
     - target: {fileID: 6798859752707701775, guid: bdd387c4c7cd3b243b3ca24e1761a3c8, type: 3}
       propertyPath: m_LocalPosition.z

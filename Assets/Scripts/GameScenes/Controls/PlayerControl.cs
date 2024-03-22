@@ -221,16 +221,16 @@ public class PlayerControl : MonoBehaviour
         {
             if (DrawingBan == true)
             {
-                playerRenderer.color = Color.red;
+                playerRenderer.color = Color.gray;
             }
             else
             {
-                playerRenderer.color = Color.yellow;
+                playerRenderer.color = new Color(33f / 255f, 113f / 255f, 219f / 255f);
             }
         }
         else if (state == State.Win || state == State.Waiting)
         {
-            playerRenderer.color = new Color(0.05f, 0.4f, 0.56f);
+            playerRenderer.color = new Color(0.0627f, 0.3765f, 0.4980f);
         }
         else if (state == State.Dead)
         {

@@ -7,13 +7,15 @@ public class WinManager : MonoBehaviour
 {
     float backgroundTilesAmount;
     float safeTilesAmount;
+    float winExpectation = 0;
     float winPercentage = 0;
     bool win = false;
 
-    public void Setup(Tilemap tilemapBackground)
+    public void Setup(Tilemap tilemapBackground, float winExpectation)
     {
         int tileCount = CountTiles(tilemapBackground);
         backgroundTilesAmount = (float)tileCount;
+        this.winExpectation = winExpectation;
     }
 
     internal bool CheckWin(Tilemap tilemapSafe)
@@ -23,7 +25,7 @@ public class WinManager : MonoBehaviour
             int tileCount = CountTiles(tilemapSafe);
             safeTilesAmount = (float)tileCount;
             winPercentage = safeTilesAmount / backgroundTilesAmount * 100;
-            if (winPercentage > 80)
+            if (winPercentage > winExpectation)
             {
                 win = true;
             }

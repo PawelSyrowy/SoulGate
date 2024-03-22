@@ -6,4 +6,5 @@ public class LevelConfiguration : MonoBehaviour
 {
     public int LevelNumber;
     public int MaxLevel;
+    public float WinExpectation;
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3819530992843830086}
   - component: {fileID: 5981235299034014016}
   - component: {fileID: 7647714856346207818}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Player
   m_TagString: Hero
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.054104645, g: 0.40129632, b: 0.5622641, a: 1}
+  m_Color: {r: 0.0627451, g: 0.3764706, b: 0.49803922, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
