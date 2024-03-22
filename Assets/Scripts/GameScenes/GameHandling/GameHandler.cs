@@ -1,27 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class GameHandler : MonoBehaviour
 {
 
-    // todo 1. Retry Button i Next button do odpowiednich scen, zmieniæ nazwe level1, nauczyæ siê eventy i zrobic dla player dead i blue tiles destroy, highscore dla ka¿dej sceny osobny
+    // todo 1. Highscore dla ka¿dej sceny osobny
+    [SerializeField] LevelConfiguration levelConfiguration;
+
     [SerializeField] internal Tilemap tilemapBackground;
     [SerializeField] internal Tilemap tilemapSafe;
     [SerializeField] internal Tilemap tilemapBorder;
     [SerializeField] internal Tilemap tilemapGhost;
     [SerializeField] internal TileBase tileToSpawn;
 
-    [SerializeField] private WinManager winManager;
-    [SerializeField] private TilemapManager tilemapManager; 
     [SerializeField] private PlayerControl player;
+    [SerializeField] private TilemapManager tilemapManager;
+    [SerializeField] private WinManager winManager;
     [SerializeField] private EnemyManager enemyManager;
 
     private LevelGrid levelGrid;
-    
+    private static GameHandler instance;
+
     internal static List<Vector3Int> TileWorldPositions;
     internal static Vector2Int TileWorldSize;
+    internal static int LevelNumber;
+    internal static int MaxLevel; 
     private static State state;
 
     internal enum State
@@ -32,13 +39,15 @@ public class GameHandler : MonoBehaviour
         Win,
     }
 
-    private static GameHandler instance;
-
     private void Awake()
     {
         instance = this;
         InitializeStatic();
 
+        LevelNumber = levelConfiguration.LevelNumber;
+        MaxLevel = levelConfiguration.MaxLevel;
+
+        TileWorldSize = new Vector2Int(71, 35);
         TileWorldPositions = new List<Vector3Int>
         {
             new(-36, 17, 0),
@@ -46,7 +55,12 @@ public class GameHandler : MonoBehaviour
             new(35, -18, 0),
             new(35, 17, 0)
         };
-        TileWorldSize = new Vector2Int(71, 35);
+    }
+
+    private static void InitializeStatic()
+    {
+        state = State.Active;
+        Score.InitializeStatic();
     }
 
     private void Start()
@@ -76,21 +90,25 @@ public class GameHandler : MonoBehaviour
         }
     }
 
-    private static void InitializeStatic()
-    {
-        state = State.Active;
-        Score.InitializeStatic();
-    }
-
     public static void NextLevel()
     {
-        Loader.Load(Loader.Scene.Level2);
-        SoundManager.PlaySound(SoundManager.Sound.BadClick);
+        if (LevelNumber < MaxLevel)
+        {
+            Loader.Scene parsedEnum;
+            Enum.TryParse("Level" + (LevelNumber + 1).ToString(), out parsedEnum);
+            Loader.Load(parsedEnum); 
+        }
+        else
+        {
+            SoundManager.PlaySound(SoundManager.Sound.BadClick);
+        }
     }
 
     public static void ReloadScene()
     {
-        Loader.Load(Loader.Scene.GameScene);
+        Loader.Scene parsedEnum;
+        Enum.TryParse("Level" + LevelNumber.ToString(), out parsedEnum);
+        Loader.Load(parsedEnum);
         SoundManager.PlaySound(SoundManager.Sound.Click);
     }
 

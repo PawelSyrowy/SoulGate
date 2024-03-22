@@ -563,10 +563,11 @@ MonoBehaviour:
   tilemapBorder: {fileID: 1494986790}
   tilemapGhost: {fileID: 2033586394}
   tileToSpawn: {fileID: 11400000, guid: e39a336f48bf9c14b9f03b6a85ae384a, type: 2}
-  winManager: {fileID: 2044493372}
+  player: {fileID: 1703782422}
   tilemapManager: {fileID: 980401297}
-  player: {fileID: 901755015}
+  winManager: {fileID: 2044493372}
   enemyManager: {fileID: 1384253865}
+  LevelNumber: 1
 --- !u!1001 &309022975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1547,17 +1548,6 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 56e4fa613eda37f43a0919f8e1e34234, type: 3}
   - sound: 8
     audioClip: {fileID: 8300000, guid: a2004740c69a264419fd97c134512a82, type: 3}
---- !u!114 &901755015 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3875804641727950658, guid: 0104c04e95ef7e747a11ae2d806958a9, type: 3}
-  m_PrefabInstance: {fileID: 1703782421}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60061931cb708e840aa62c999ddd2228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &980401296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29131,6 +29121,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0104c04e95ef7e747a11ae2d806958a9, type: 3}
+--- !u!114 &1703782422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7647714856346207818, guid: 0104c04e95ef7e747a11ae2d806958a9, type: 3}
+  m_PrefabInstance: {fileID: 1703782421}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60061931cb708e840aa62c999ddd2228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1712753162
 GameObject:
   m_ObjectHideFlags: 0

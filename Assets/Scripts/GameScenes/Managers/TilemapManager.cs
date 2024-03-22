@@ -13,14 +13,13 @@ using Vector3 = UnityEngine.Vector3;
 
 public class TilemapManager : MonoBehaviour
 {
+    List<Vector3Int> TileWorldPositions;
+    Vector2Int TileWorldSize; 
     internal Tilemap TilemapBackground;
     Tilemap TilemapSafe;
     Tilemap TilemapBorder; 
     Tilemap TilemapGhost;
     TileBase TileToSpawn;
-
-    List<Vector3Int> TileWorldPositions;
-    Vector2Int TileWorldSize;
     WinManager WinManager;
     PlayerControl Player;
     internal EnemyManager EnemyManager;
@@ -28,7 +27,6 @@ public class TilemapManager : MonoBehaviour
     bool isDrawing = false;
     bool startedFromBorder = false;
     bool finishedOnBorder = false;
-    bool CollisionWithGhostTile = false;
     Vector3Int firstCell;
     Vector3Int lastCell;
 
@@ -44,36 +42,32 @@ public class TilemapManager : MonoBehaviour
         WinManager = winManager;
         Player = player;
         EnemyManager = enemyManager;
+
+        foreach (EnemyControl enemy in EnemyManager.enemyArray)
+        {
+            enemy.OnCollisionWithGhostTile += _OnCollisionWithGhostTile;
+        }
+    }
+
+    private void _OnCollisionWithGhostTile(object sender, EventArgs e)
+    {
+        Score.RemoveScore(500, Player);
+        DestroyGhostTiles();
+        if (Player != null)
+        {
+            Player.DrawingBan = true;
+        }
+        SoundManager.PlaySound(SoundManager.Sound.Hurt);
     }
 
     void LateUpdate()
     {
-        bool WarningBool = false;
-
         if (Player.state.ToString() == "Playing")
         {
-            if (CollisionWithGhostTile == true) //todo event
-            {
-                Score.RemoveScore(500, Player);
-                DestroyGhostTiles();
-                WarningBool = true;
-                CollisionWithGhostTile = false;
-                if (Player != null)
-                {
-                    Player.DrawingBan = true;
-                }
-                SoundManager.PlaySound(SoundManager.Sound.Hurt);
-            }
-
-
             Player.CheckCanPlayerDraw(IsPlayerOnGhostTiles(), IsPlayerOnSafeTiles());
 
             if (Player.CheckPlayerCanFinishDrawing(IsPlayerOnSafeTiles()))
             {
-                if (WarningBool)
-                {
-                    Debug.LogError("Tak nigdy nie powinno byæ!");
-                }
                 FinishDrawing();
                 if (WinManager.CheckWin(TilemapSafe))
                 {

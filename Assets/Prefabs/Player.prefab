@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 272218036995416926}
   - component: {fileID: 2854912459301757456}
-  - component: {fileID: 3875804641727950658}
   - component: {fileID: 3819530992843830086}
   - component: {fileID: 5981235299034014016}
+  - component: {fileID: 7647714856346207818}
   m_Layer: 3
   m_Name: Player
   m_TagString: Hero
@@ -62,22 +62,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &3875804641727950658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8761281341503869386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60061931cb708e840aa62c999ddd2228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 20
-  rb: {fileID: 2854912459301757456}
-  playerRenderer: {fileID: 5981235299034014016}
-  tilemapBackground: {fileID: 0}
 --- !u!61 &3819530992843830086
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -175,3 +159,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7647714856346207818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761281341503869386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60061931cb708e840aa62c999ddd2228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 2854912459301757456}
+  playerRenderer: {fileID: 5981235299034014016}
+  moveSpeed: 20

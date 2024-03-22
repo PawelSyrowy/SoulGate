@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WinGameWindow : MonoBehaviour
 {
     private static WinGameWindow instance;
+    [SerializeField] Image nextBtnImage;
+
     private void Awake()
     {
         instance = this;
@@ -14,6 +17,14 @@ public class WinGameWindow : MonoBehaviour
     private void Show()
     {
         gameObject.SetActive(true);
+        if (GameHandler.LevelNumber < GameHandler.MaxLevel)
+        {
+            nextBtnImage.color = new UnityEngine.Color(0f, 1f, 0f);
+        }
+        else
+        {
+            nextBtnImage.color = new UnityEngine.Color(0.5f, 0.5f, 0.5f);
+        }
     }
 
     private void Hide()

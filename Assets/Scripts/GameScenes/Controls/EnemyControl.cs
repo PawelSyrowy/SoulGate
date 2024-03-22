@@ -8,14 +8,14 @@ using Random = System.Random;
 
 public class EnemyControl : MonoBehaviour
 {
+    public event EventHandler OnCollisionWithGhostTile;
+    
     public float moveSpeed = 1f;
     public float dX = 0;
     public float dY = 0;
     Rigidbody2D rb;
 
     Vector2 velocityResume;
-    internal bool CollisionWithGhostTile = false;
-
     State state = State.Waiting;
     State stateResume;
 
@@ -40,6 +40,17 @@ public class EnemyControl : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (state == State.Moving)
+        {
+            if (collision.gameObject.CompareTag("TilemapGhost"))
+            {
+                OnCollisionWithGhostTile?.Invoke(this, EventArgs.Empty);
+            }
+        }
+    }
+
     void CheckMovement()
     {
         if (rb.velocity.x == 0 || rb.velocity.y == 0)
@@ -59,14 +70,39 @@ public class EnemyControl : MonoBehaviour
         return Math.Sqrt(1 - x * x);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    internal void StartMovement()
     {
+        Random rand = new();
+        double x = rand.NextDouble() * 2 - 1;
+        double y = CalculateY(x);
+        dX = (float)x;
+        dY = (float)y;
+        rb = GetComponent<Rigidbody2D>();
+
+        Vector2 movement = new(dX, dY);
+        rb.velocity = moveSpeed * movement;
+
+        state = State.Moving;
+    }
+
+    internal void EnemyMoving()
+    {
+        state = stateResume;
         if (state == State.Moving)
         {
-            if (collision.gameObject.CompareTag("TilemapGhost"))
-            {
-                CollisionWithGhostTile |= true; //todo event
-            }
+            rb.velocity = velocityResume;
+            velocityResume = Vector2.zero;
+        }
+    }
+
+    internal void EnemyStopped()
+    {
+        stateResume = state;
+        state = State.Stopped;
+        if (stateResume == State.Moving)
+        {
+            velocityResume = new Vector2(rb.velocity.x, rb.velocity.y);
+            rb.velocity = Vector2.zero;
         }
     }
 
@@ -92,41 +128,5 @@ public class EnemyControl : MonoBehaviour
         Vector3 enemyCenter = transform.position;
         Vector3Int cellPosition = tilemapBackground.WorldToCell(enemyCenter);
         return new Vector3(cellPosition.x, cellPosition.y, cellPosition.z);
-    }
-
-    internal void StartMovement()
-    {
-        Random rand = new();
-        double x = rand.NextDouble() * 2 - 1;
-        double y = CalculateY(x);
-        dX = (float)x;
-        dY = (float)y;
-        rb = GetComponent<Rigidbody2D>();
-
-        Vector2 movement = new(dX, dY);
-        rb.velocity = moveSpeed * movement;
-
-        state = State.Moving;
-    }
-    
-    internal void EnemyMoving()
-    {
-        state = stateResume;
-        if (state == State.Moving)
-        {
-            rb.velocity = velocityResume;
-            velocityResume = Vector2.zero;
-        }
-    }
-
-    internal void EnemyStopped()
-    {
-        stateResume = state;
-        state=State.Stopped;
-        if (stateResume==State.Moving)
-        {
-            velocityResume = new Vector2(rb.velocity.x, rb.velocity.y);
-            rb.velocity = Vector2.zero;
-        }
     }
 }

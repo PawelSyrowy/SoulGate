@@ -217,7 +217,7 @@ public class PlayerControl : MonoBehaviour
 
     void PlayerColor()
     {
-        if (state==State.Playing)
+        if (state == State.Playing)
         {
             if (DrawingBan == true)
             {
@@ -228,11 +228,11 @@ public class PlayerControl : MonoBehaviour
                 playerRenderer.color = Color.yellow;
             }
         }
-        else if (state==State.Win || state==State.Waiting)
+        else if (state == State.Win || state == State.Waiting)
         {
             playerRenderer.color = new Color(0.05f, 0.4f, 0.56f);
         }
-        else if (state==State.Dead)
+        else if (state == State.Dead)
         {
             playerRenderer.color = Color.gray;
         }
