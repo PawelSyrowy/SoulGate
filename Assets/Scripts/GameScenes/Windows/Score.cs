@@ -10,7 +10,7 @@ public static class Score
 
     public static void InitializeStatic()
     {
-        score = 1000;
+        score = 2000;
     }
 
     public static int GetScore()

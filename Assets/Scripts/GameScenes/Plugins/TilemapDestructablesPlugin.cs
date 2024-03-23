@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMExt = TilemapManagerExtension;
 
 public class TilemapDestructablesPlugin : MonoBehaviour
 {
@@ -16,9 +17,7 @@ public class TilemapDestructablesPlugin : MonoBehaviour
 
     public void DestroyDestructables(Vector2 playerCenter, Vector2 contactPosition)
     {
-        Vector2 direction = (contactPosition - playerCenter).normalized;
-        Vector2 offsetPosition = contactPosition + direction/2;
-        Vector3Int tilePosition = TilemapDestructables.WorldToCell(offsetPosition);
+        Vector3Int tilePosition = TMExt.GetTileFromPlayerCollision(playerCenter, contactPosition, TilemapDestructables);
         TilemapDestructables.SetTile(tilePosition, null);
     }
 }

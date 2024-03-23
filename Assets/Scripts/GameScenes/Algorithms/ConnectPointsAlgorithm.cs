@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class ConnectPointsAlgorithm : MonoBehaviour
+public class ConnectPointsAlgorithm
 {
+    //todo Od œciany do œciany powinno równie¿ szukaæ najbli¿szego punktu zielonej granicy.
     Vector3Int FirstCell;
     Vector3Int LastCell;
     readonly List<Vector3Int> TilesPositionsOther;

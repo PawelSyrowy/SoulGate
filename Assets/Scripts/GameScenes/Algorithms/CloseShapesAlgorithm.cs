@@ -7,7 +7,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CloseShapesAlgorithm : MonoBehaviour
+public class CloseShapesAlgorithm
 {
     readonly List<Vector3Int> Positions;
     readonly int OffsetX;
@@ -17,11 +17,6 @@ public class CloseShapesAlgorithm : MonoBehaviour
     bool[,] grid;
     int width;
     int height;
-
-    //public List<Vector3> EmptyPositionsTest = new List<Vector3>();
-    //public List<Vector3> ForbiddenPositionsTest = new List<Vector3>();
-    //public List<Vector3> BusyPositionsTest = new List<Vector3>();
-    //public List<Vector3> BorderPositionsTest = new List<Vector3>();
 
     internal CloseShapesAlgorithm(List<Vector3Int> positions, int offsetX, int offsetY, Vector2Int tileWorldSize)
     {
@@ -39,7 +34,6 @@ public class CloseShapesAlgorithm : MonoBehaviour
         foreach (Vector3Int position in Positions)
         {
             grid[position.x + OffsetX, position.y + OffsetY] = true;
-            //BorderPositionsTest.Add(new Vector3((position.x + 100) * GlobalScale, (position.y) * GlobalScale, 0));
         }
         FloodFill(Point.Empty);
         List<Vector3Int> EmptyPositions = PrintGrid()[0];
@@ -78,10 +72,6 @@ public class CloseShapesAlgorithm : MonoBehaviour
                 if (row == 0 || row == height - 1 || col == 0 || col == width - 1)
                 {
                     c = 'X';
-                    //if (c == 'X')
-                    //{
-                    //    ForbiddenPositionsTest.Add(new Vector3((col - OffsetX + 100) * GlobalScale, (row - OffsetY) * GlobalScale, 0));
-                    //}
                 }
                 else
                 {
@@ -89,11 +79,9 @@ public class CloseShapesAlgorithm : MonoBehaviour
                     if (c == '.')
                     {
                         positions[0].Add(new Vector3Int((col - OffsetX), (row - OffsetY), 0));
-                        //EmptyPositionsTest.Add(new Vector3((col - OffsetX+100) * GlobalScale, (row - OffsetY) * GlobalScale, 0));
                     }
                     else if (c == '#')
                     {
-                        //BusyPositionsTest.Add(new Vector3((col - OffsetX + 100) * GlobalScale, (row - OffsetY) * GlobalScale, 0));
                         positions[1].Add(new Vector3Int((col - OffsetX), (row - OffsetY), 0));
                     }
                 }
