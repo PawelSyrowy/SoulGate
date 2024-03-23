@@ -14,7 +14,7 @@ using TMExt = TilemapManagerExtension;
 
 public class TilemapManager : MonoBehaviour
 {
-    //todo 1. Sprawdzi³em Update zamiast LateUpdate, 2. Odbijanie siê pi³ek od tilemap jest s³abe
+    //todo 1. Odbijanie siê pi³ek od tilemap jest s³abe
     
     List<Vector3Int> TileWorldPositions;
     Vector2Int TileWorldSize;
@@ -47,7 +47,7 @@ public class TilemapManager : MonoBehaviour
         TilemapManagerDLC.Setup(EnemyManager, TileToSpawn);
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (Player.state.ToString() == "Playing")
         {

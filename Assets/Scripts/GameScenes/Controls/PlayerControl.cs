@@ -132,6 +132,11 @@ public class PlayerControl : MonoBehaviour
 
     internal void CheckCanPlayerDraw(bool isOnGhost, bool isOnSafe)
     {
+        if (isOnSafe)
+        {
+            DrawingBan = false;
+        }
+
         if (DrawingBan)
         {
             CanDraw = false;
