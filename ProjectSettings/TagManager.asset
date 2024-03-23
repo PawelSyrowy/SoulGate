@@ -11,6 +11,7 @@ TagManager:
   - TilemapGhost
   - TilemapBorder
   - TilemapDestructable
+  - TilemapFakeGhost
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - TilemapBorder
   - TilemapSafe
   - TilemapDestructable
-  - 
+  - TilemapFakeGhost
   - 
   - 
   - 
@@ -68,4 +69,7 @@ TagManager:
     locked: 0
   - name: TilemapDestructable
     uniqueID: 2502551473
+    locked: 0
+  - name: TilemapFakeGhost
+    uniqueID: 3703397025
     locked: 0

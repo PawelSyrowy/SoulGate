@@ -17,7 +17,7 @@ public class GameHandler : MonoBehaviour
     internal static List<Vector3Int> TileWorldPositions;
     internal static Vector2Int TileWorldSize;
     internal static int LevelNumber;
-    internal static int MaxLevel;
+    internal static bool IsMaxLevel;
 
     private static State state;
     internal enum State
@@ -35,7 +35,7 @@ public class GameHandler : MonoBehaviour
         TileWorldSize = levelConfiguration.TileWorldSize;
         TileWorldPositions = levelConfiguration.TileWorldPositions;
         LevelNumber = levelConfiguration.LevelNumber;
-        MaxLevel = levelConfiguration.MaxLevel;
+        IsMaxLevel = levelConfiguration.MaxLevel;
         Score.InitializeStatic();
         Progress.InitializeStatic(tilemapManager.TilemapBackground, levelConfiguration.WinExpectation);
     }
@@ -67,7 +67,7 @@ public class GameHandler : MonoBehaviour
 
     public static void NextLevel()
     {
-        if (LevelNumber < MaxLevel)
+        if (!IsMaxLevel)
         {
             Loader.Scene parsedEnum;
             Enum.TryParse("Level" + (LevelNumber + 1).ToString(), out parsedEnum);

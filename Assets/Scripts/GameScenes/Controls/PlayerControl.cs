@@ -108,7 +108,7 @@ public class PlayerControl : MonoBehaviour
             {
                 foreach (ContactPoint2D point in collision.contacts)
                 {
-                    tilemapManager.DestructablesPlugin.DestroyDestructables(transform.position, point.point);
+                    tilemapManager.TilemapManagerDLC.DestroyDestructables(transform.position, point.point);
                 }
             }
         }

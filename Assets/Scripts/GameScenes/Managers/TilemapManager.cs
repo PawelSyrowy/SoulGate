@@ -25,9 +25,8 @@ public class TilemapManager : MonoBehaviour
     [SerializeField] internal TileBase TileToSpawn;
     PlayerControl Player;
     internal EnemyManager EnemyManager;
+    [SerializeField] internal TilemapManagerDLC TilemapManagerDLC;
 
-    internal TilemapDestructablesPlugin DestructablesPlugin; [SerializeField] Tilemap TilemapDestructables;
-    
     bool isDrawing = false;
     bool startedFromBorder = false;
     bool finishedOnBorder = false;
@@ -45,12 +44,7 @@ public class TilemapManager : MonoBehaviour
         {
             enemy.OnCollisionWithGhostTile += _OnCollisionWithGhostTile;
         }
-
-        if (TilemapDestructables != null) 
-        {
-            DestructablesPlugin = gameObject.AddComponent<TilemapDestructablesPlugin>();
-            DestructablesPlugin.Setup(TilemapDestructables, TileToSpawn);
-        }
+        TilemapManagerDLC.Setup(EnemyManager, TileToSpawn);
     }
 
     void Update()

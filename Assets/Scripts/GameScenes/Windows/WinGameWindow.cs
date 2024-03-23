@@ -17,7 +17,7 @@ public class WinGameWindow : MonoBehaviour
     private void Show()
     {
         gameObject.SetActive(true);
-        if (GameHandler.LevelNumber < GameHandler.MaxLevel)
+        if (!GameHandler.IsMaxLevel)
         {
             nextBtnImage.color = new UnityEngine.Color(0f, 1f, 0f);
         }

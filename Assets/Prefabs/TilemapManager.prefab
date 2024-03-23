@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4380984422593557580}
   - component: {fileID: 4666429932414573650}
+  - component: {fileID: 3156500965589900538}
   m_Layer: 0
   m_Name: TilemapManager
   m_TagString: Untagged
@@ -48,4 +49,20 @@ MonoBehaviour:
   TilemapSafe: {fileID: 0}
   TilemapBorder: {fileID: 0}
   TilemapGhost: {fileID: 0}
+  TileToSpawn: {fileID: 11400000, guid: e39a336f48bf9c14b9f03b6a85ae384a, type: 2}
+  TilemapManagerDLC: {fileID: 3156500965589900538}
+--- !u!114 &3156500965589900538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6555111148137453467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a58a467faab3d443a257d493d77aef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TilemapDestructables: {fileID: 0}
+  TilemapFakeGhost: {fileID: 0}
   TileToSpawn: {fileID: 11400000, guid: e39a336f48bf9c14b9f03b6a85ae384a, type: 2}

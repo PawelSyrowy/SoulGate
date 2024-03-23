@@ -9,7 +9,14 @@ using Random = System.Random;
 public class EnemyControl : MonoBehaviour
 {
     public event EventHandler OnCollisionWithGhostTile;
-    
+
+    public event EventHandler <OnCollisionWithFakeGhostTileEventArgs> OnCollisionWithFakeGhostTile;
+    public class OnCollisionWithFakeGhostTileEventArgs : EventArgs
+    {
+        public Transform Transform; 
+        public ContactPoint2D Point;
+    }
+
     public float moveSpeed = 1f;
     public float dX = 0;
     public float dY = 0;
@@ -47,6 +54,17 @@ public class EnemyControl : MonoBehaviour
             if (collision.gameObject.CompareTag("TilemapGhost"))
             {
                 OnCollisionWithGhostTile?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        if (state == State.Moving)
+        {
+            if (collision.gameObject.CompareTag("TilemapFakeGhost"))
+            {
+                foreach (ContactPoint2D point in collision.contacts)
+                {
+                    OnCollisionWithFakeGhostTile?.Invoke(this, new OnCollisionWithFakeGhostTileEventArgs { Transform = transform, Point = point }); 
+                }
             }
         }
     }
