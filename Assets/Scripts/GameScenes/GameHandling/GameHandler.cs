@@ -7,30 +7,19 @@ using UnityEngine.Tilemaps;
 
 public class GameHandler : MonoBehaviour
 {
-
-    // todo 1. Highscore dla ka¿dej sceny osobny
-    [SerializeField] LevelConfiguration levelConfiguration;
-
-    [SerializeField] internal Tilemap tilemapBackground;
-    [SerializeField] internal Tilemap tilemapSafe;
-    [SerializeField] internal Tilemap tilemapBorder;
-    [SerializeField] internal Tilemap tilemapGhost;
-    [SerializeField] internal TileBase tileToSpawn;
-
+    private static GameHandler instance;
+    private LevelGrid levelGrid;
     [SerializeField] private PlayerControl player;
     [SerializeField] private TilemapManager tilemapManager;
-    [SerializeField] private WinManager winManager;
-    [SerializeField] private EnemyManager enemyManager;
+    [SerializeField] private EnemyManager enemyManager; 
 
-    private LevelGrid levelGrid;
-    private static GameHandler instance;
-
+    [SerializeField] LevelConfiguration levelConfiguration;
     internal static List<Vector3Int> TileWorldPositions;
     internal static Vector2Int TileWorldSize;
     internal static int LevelNumber;
-    internal static int MaxLevel; 
-    private static State state;
+    internal static int MaxLevel;
 
+    private static State state;
     internal enum State
     {
         Paused,
@@ -42,34 +31,20 @@ public class GameHandler : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        InitializeStatic();
-
+        state = State.Active;
+        TileWorldSize = levelConfiguration.TileWorldSize;
+        TileWorldPositions = levelConfiguration.TileWorldPositions;
         LevelNumber = levelConfiguration.LevelNumber;
         MaxLevel = levelConfiguration.MaxLevel;
-
-        TileWorldSize = new Vector2Int(71, 35);
-        TileWorldPositions = new List<Vector3Int>
-        {
-            new(-36, 17, 0),
-            new(-36, -18, 0),
-            new(35, -18, 0),
-            new(35, 17, 0)
-        };
-    }
-
-    private static void InitializeStatic()
-    {
-        state = State.Active;
         Score.InitializeStatic();
+        Progress.InitializeStatic(tilemapManager.TilemapBackground, levelConfiguration.WinExpectation);
     }
 
     private void Start()
     {
-        levelGrid = new LevelGrid(TileWorldSize.x, TileWorldSize.y, player);
-
+        levelGrid = new LevelGrid(player);
         player.Setup(levelGrid, tilemapManager);
-        tilemapManager.Setup(tilemapBackground, tilemapSafe, tilemapBorder, tilemapGhost, tileToSpawn, winManager, player, enemyManager);
-        winManager.Setup(tilemapBackground, levelConfiguration.WinExpectation);
+        tilemapManager.Setup(player, enemyManager);
     }
 
     private void Update()

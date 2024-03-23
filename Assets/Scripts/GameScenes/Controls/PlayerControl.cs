@@ -10,7 +10,6 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] SpriteRenderer playerRenderer;
     private LevelGrid levelGrid;
     private TilemapManager tilemapManager;
-
     public float moveSpeed = 2f;
 
     internal bool IsOnBackground = false;
@@ -99,11 +98,20 @@ public class PlayerControl : MonoBehaviour
                 PlayerDied();
             }
         }
+    }
 
-        //if (collision.gameObject.CompareTag("GreenTile"))
-        //{
-        //    tilemapSpawner.DestroyGreenTile(transform.position, collision.GetContact(0).point);
-        //}
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (state == State.Playing)
+        {
+            if (collision.gameObject.CompareTag("TilemapDestructable"))
+            {
+                foreach (ContactPoint2D point in collision.contacts)
+                {
+                    tilemapManager.DestructablesPlugin.DestroyDestructables(transform.position, point.point);
+                }
+            }
+        }
     }
 
     internal void CheckIsPlayerOnBackground()

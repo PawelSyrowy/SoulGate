@@ -13,10 +13,10 @@ public class LevelGrid
     private readonly int height;
     private readonly PlayerControl player;
 
-    public LevelGrid(int width, int height, PlayerControl player)
+    public LevelGrid(PlayerControl player)
     {
-        this.width = width;
-        this.height = height;
+        this.width = GameHandler.TileWorldSize.x;
+        this.height = GameHandler.TileWorldSize.y;
         this.player = player;
         SpawnFood();
     }

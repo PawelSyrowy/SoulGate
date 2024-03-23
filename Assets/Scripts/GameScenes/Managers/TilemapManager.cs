@@ -14,32 +14,27 @@ using Vector3 = UnityEngine.Vector3;
 public class TilemapManager : MonoBehaviour
 {
     List<Vector3Int> TileWorldPositions;
-    Vector2Int TileWorldSize; 
-    internal Tilemap TilemapBackground;
-    Tilemap TilemapSafe;
-    Tilemap TilemapBorder; 
-    Tilemap TilemapGhost;
-    TileBase TileToSpawn;
-    WinManager WinManager;
+    Vector2Int TileWorldSize;
+    [SerializeField] internal Tilemap TilemapBackground;
+    [SerializeField] internal Tilemap TilemapSafe;
+    [SerializeField] internal Tilemap TilemapBorder;
+    [SerializeField] internal Tilemap TilemapGhost;
+    [SerializeField] internal TileBase TileToSpawn;
     PlayerControl Player;
     internal EnemyManager EnemyManager;
 
+    internal TilemapDestructablesPlugin DestructablesPlugin; [SerializeField] Tilemap TilemapDestructables;
+    
     bool isDrawing = false;
     bool startedFromBorder = false;
     bool finishedOnBorder = false;
     Vector3Int firstCell;
     Vector3Int lastCell;
 
-    public void Setup(Tilemap tilemapBackground, Tilemap tilemapSafe, Tilemap tilemapBorder, Tilemap tilemapGhost, TileBase tileToSpawn, WinManager winManager, PlayerControl player, EnemyManager enemyManager)
+    public void Setup(PlayerControl player, EnemyManager enemyManager)
     {
         TileWorldPositions = GameHandler.TileWorldPositions;
-        TileWorldSize = GameHandler.TileWorldSize; 
-        TilemapBackground = tilemapBackground;
-        TilemapSafe = tilemapSafe;
-        TilemapBorder = tilemapBorder;
-        TilemapGhost = tilemapGhost;
-        TileToSpawn = tileToSpawn;
-        WinManager = winManager;
+        TileWorldSize = GameHandler.TileWorldSize;
         Player = player;
         EnemyManager = enemyManager;
 
@@ -47,17 +42,12 @@ public class TilemapManager : MonoBehaviour
         {
             enemy.OnCollisionWithGhostTile += _OnCollisionWithGhostTile;
         }
-    }
 
-    private void _OnCollisionWithGhostTile(object sender, EventArgs e)
-    {
-        Score.RemoveScore(100, Player);
-        DestroyGhostTiles();
-        if (Player != null)
+        if (TilemapDestructables != null) 
         {
-            Player.DrawingBan = true;
+            DestructablesPlugin = gameObject.AddComponent<TilemapDestructablesPlugin>();
+            DestructablesPlugin.Setup(TilemapDestructables, TileToSpawn);
         }
-        SoundManager.PlaySound(SoundManager.Sound.Hurt);
     }
 
     void LateUpdate()
@@ -69,7 +59,7 @@ public class TilemapManager : MonoBehaviour
             if (Player.CheckPlayerCanFinishDrawing(IsPlayerOnSafeTiles()))
             {
                 FinishDrawing();
-                if (WinManager.CheckWin(TilemapSafe))
+                if (Progress.CheckWin(TilemapSafe))
                 {
                     Player.PlayerWin();
                     GameHandler.PlayerWin();
@@ -249,12 +239,15 @@ public class TilemapManager : MonoBehaviour
         }
         return positions;
     }
-}
 
-//public void DestroyGreenTile(Vector2 playerCenter, Vector2 contactPosition)
-//{
-//    Vector2 direction = (contactPosition - playerCenter).normalized;
-//    Vector2 offsetPosition = playerCenter + direction; 
-//    Vector3Int tilePosition = TilemapGreen.WorldToCell(offsetPosition);
-//    TilemapGreen.SetTile(tilePosition, null);
-//}
+    private void _OnCollisionWithGhostTile(object sender, EventArgs e)
+    {
+        Score.RemoveScore(100, Player);
+        DestroyGhostTiles();
+        if (Player != null)
+        {
+            Player.DrawingBan = true;
+        }
+        SoundManager.PlaySound(SoundManager.Sound.Hurt);
+    }
+}
