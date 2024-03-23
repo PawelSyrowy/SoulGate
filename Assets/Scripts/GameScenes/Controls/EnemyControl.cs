@@ -8,6 +8,7 @@ using Random = System.Random;
 
 public class EnemyControl : MonoBehaviour
 {
+    // todo maksymalna prêdkoœæ dla enemy
     public event EventHandler OnCollisionWithGhostTile;
 
     public event EventHandler <OnCollisionWithFakeGhostTileEventArgs> OnCollisionWithFakeGhostTile;

@@ -6,6 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public static class Score
 {
+    //todo zrobiæ nowy system ¿ycia
     private static int score;
 
     public static void InitializeStatic()

@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNumber: 9
-  MaxLevel: 6
+  MaxLevel: 0
   WinExpectation: 50
 --- !u!114 &347440333 stripped
 MonoBehaviour:
