@@ -191,7 +191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelNumber: 2
   MaxLevel: 0
-  WinExpectation: 65
+  WinExpectation: 75
+  LifeAmount: 2
 --- !u!114 &347440333 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2156822332893423062, guid: df68313ab28177a47845142a6f5f08b1, type: 3}

@@ -340,6 +340,7 @@ MonoBehaviour:
   LevelNumber: 11
   MaxLevel: 1
   WinExpectation: 70
+  LifeAmount: 1
 --- !u!1 &264995909
 GameObject:
   m_ObjectHideFlags: 0

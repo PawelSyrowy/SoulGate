@@ -18,7 +18,7 @@ public class GameOverWindow : MonoBehaviour
     private void Show()
     {
         gameObject.SetActive(true);
-        if (Score.GetScore() >= 1000)
+        if (Score.GetScore() > 0)
         {
             lifeBtnImage.color = new UnityEngine.Color(0f, 1f, 0f);
         }

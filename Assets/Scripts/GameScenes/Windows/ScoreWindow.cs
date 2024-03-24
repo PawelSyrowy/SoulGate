@@ -21,7 +21,7 @@ public class ScoreWindow : MonoBehaviour
 
     private void Update()
     {
-        scoreText.text = Score.GetScore().ToString();
+        scoreText.text = "Lives left: " + Score.GetScore().ToString();
     }
 
     private void UpdateHighscore()

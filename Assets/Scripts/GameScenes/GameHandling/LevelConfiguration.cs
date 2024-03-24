@@ -17,4 +17,5 @@ public class LevelConfiguration : MonoBehaviour
     public int LevelNumber;
     public bool MaxLevel;
     public float WinExpectation;
+    public int LifeAmount;
 }

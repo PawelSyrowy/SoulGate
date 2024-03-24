@@ -6,12 +6,11 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public static class Score
 {
-    //todo zrobiæ nowy system ¿ycia
     private static int score;
 
-    public static void InitializeStatic()
+    public static void InitializeStatic(int lifeAmount)
     {
-        score = 2000;
+        score = lifeAmount;
     }
 
     public static int GetScore()
@@ -21,7 +20,7 @@ public static class Score
 
     public static void AddScore()
     {
-        score += 100;
+        score += 1;
     }
 
     public static void RemoveScore(int amount, PlayerControl player)

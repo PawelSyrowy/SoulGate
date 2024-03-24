@@ -191,7 +191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelNumber: 1
   MaxLevel: 0
-  WinExpectation: 65
+  WinExpectation: 70
+  LifeAmount: 3
 --- !u!1001 &309022975
 PrefabInstance:
   m_ObjectHideFlags: 0

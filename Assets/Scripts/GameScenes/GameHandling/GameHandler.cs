@@ -36,7 +36,7 @@ public class GameHandler : MonoBehaviour
         TileWorldPositions = levelConfiguration.TileWorldPositions;
         LevelNumber = levelConfiguration.LevelNumber;
         IsMaxLevel = levelConfiguration.MaxLevel;
-        Score.InitializeStatic();
+        Score.InitializeStatic(levelConfiguration.LifeAmount);
         Progress.InitializeStatic(tilemapManager.TilemapBackground, levelConfiguration.WinExpectation);
     }
 
@@ -109,9 +109,9 @@ public class GameHandler : MonoBehaviour
 
     public void PlayerNewLife()
     {
-        if (Score.GetScore()>= 1000)
+        if (Score.GetScore()>0)
         {
-            Score.RemoveScore(1000, null);
+            Score.RemoveScore(1, null);
             player.NewLife();
             state=State.Active;
             GameOverWindow.HideStatic();
