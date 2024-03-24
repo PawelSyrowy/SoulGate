@@ -13,9 +13,7 @@ using Vector3 = UnityEngine.Vector3;
 using TMExt = TilemapManagerExtension;
 
 public class TilemapManager : MonoBehaviour
-{
-    //todo 1. Odbijanie siê pi³ek od tilemap jest s³abe
-    
+{    
     List<Vector3Int> TileWorldPositions;
     Vector2Int TileWorldSize;
     [SerializeField] internal Tilemap TilemapBackground;
@@ -107,7 +105,7 @@ public class TilemapManager : MonoBehaviour
         if (startedFromBorder && finishedOnBorder)
         {
             ConnectPointsAlgorithm connectPointsManager = new(firstCell, lastCell, TileWorldPositions, TileWorldSize, TMExt.GetAllTilesPositions(TilemapBorder));
-            pointsToDrawBorder = connectPointsManager.FinishBorder();
+            pointsToDrawBorder = connectPointsManager.FindWayBetweenPoints();
         }
         else if (finishedOnBorder != startedFromBorder)
         {

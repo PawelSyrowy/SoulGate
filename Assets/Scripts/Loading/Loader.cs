@@ -21,6 +21,16 @@ public static class Loader
         Level8,
         Level9,
         Level10,
+        Level11,
+        Level12,
+        Level13,
+        Level14,
+        Level15,
+        Level16,
+        Level17,
+        Level18,
+        Level19,
+        Level20,
     }
 
     private static Action loaderCallbackAction;

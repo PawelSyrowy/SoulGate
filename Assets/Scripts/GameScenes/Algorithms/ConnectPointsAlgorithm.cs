@@ -20,31 +20,6 @@ public class ConnectPointsAlgorithm
         TilemapPositionsBorder = tilemapPositions;
     }
 
-    internal List<Vector3Int> FinishBorder()
-    {
-        if (1==2) //TilemapPositionsBorder.Count > 0
-        {
-            List<Vector3Int> shortestWayToBorder = FindShortestWayToBorder();
-            List<Vector3Int> wayBetweenPoints = FindShortestWayBetweenPoints();
-            List<Vector3Int> finishBorder = wayBetweenPoints.Count <= shortestWayToBorder.Count ? wayBetweenPoints : shortestWayToBorder;
-
-            return finishBorder;
-        }
-        else
-        {
-            return FindShortestWayBetweenPoints();
-        }
-    }
-
-    private List<Vector3Int> FindShortestWayToBorder()
-    {
-        List<Vector3Int> shortestWayToBorder = new();
-        shortestWayToBorder.AddRange(FindWayToBorder(FirstCell));
-        shortestWayToBorder.AddRange(FindWayToBorder(LastCell));
-
-        return shortestWayToBorder;
-    }
-
     internal List<Vector3Int> FindWayToBorder(Vector3Int onlyCell)
     {
         List<Vector3Int> borderTiles = new();
@@ -140,7 +115,7 @@ public class ConnectPointsAlgorithm
         return tilesFromFirstCellToBorder;
     }
 
-    internal List<Vector3Int> FindShortestWayBetweenPoints()
+    internal List<Vector3Int> FindWayBetweenPoints()
     {
         List<Vector3Int> tilesToDraw = new();
         List<Vector3Int> tilesOnLine;
