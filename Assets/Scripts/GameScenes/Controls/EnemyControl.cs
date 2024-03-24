@@ -56,10 +56,7 @@ public class EnemyControl : MonoBehaviour
             {
                 OnCollisionWithGhostTile?.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        if (state == State.Moving)
-        {
+            
             if (collision.gameObject.CompareTag("TilemapFakeGhost"))
             {
                 foreach (ContactPoint2D point in collision.contacts)

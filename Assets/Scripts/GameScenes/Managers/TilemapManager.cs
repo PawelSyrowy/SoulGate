@@ -106,14 +106,14 @@ public class TilemapManager : MonoBehaviour
         List<Vector3Int> pointsToDrawBorder = new();
         if (startedFromBorder && finishedOnBorder)
         {
-            ConnectPointsAlgorithm connectPointsManager = new(firstCell, lastCell, TileWorldPositions, TileWorldSize);
-            pointsToDrawBorder = connectPointsManager.FindWayBetweenPoints();
+            ConnectPointsAlgorithm connectPointsManager = new(firstCell, lastCell, TileWorldPositions, TileWorldSize, TMExt.GetAllTilesPositions(TilemapBorder));
+            pointsToDrawBorder = connectPointsManager.FinishBorder();
         }
         else if (finishedOnBorder != startedFromBorder)
         {
-            Vector3Int cell = startedFromBorder ? firstCell : lastCell;
-            ConnectPointsAlgorithm connectPointsManager = new(cell, TileWorldPositions, TMExt.GetAllTilesPositions(TilemapBorder));
-            pointsToDrawBorder = connectPointsManager.FindWayToBorder();
+            Vector3Int onlyCell = startedFromBorder ? firstCell : lastCell;
+            ConnectPointsAlgorithm connectPointsManager = new(firstCell, lastCell, TileWorldPositions, TileWorldSize, TMExt.GetAllTilesPositions(TilemapBorder));
+            pointsToDrawBorder = connectPointsManager.FindWayToBorder(onlyCell);
         }
         foreach (EnemyControl enemy in EnemyManager.enemyArray)
         {
@@ -122,7 +122,7 @@ public class TilemapManager : MonoBehaviour
                 TMExt.AddTiles(pointsToDrawBorder, TilemapGhost, TileToSpawn);
             }
         }
-
+        
         TMExt.AddTiles(TMExt.GetAllTilesPositions(TilemapGhost), TilemapBorder, TileToSpawn);
         TMExt.ReplaceAllTiles(TilemapGhost, TilemapSafe, TileToSpawn);
 
