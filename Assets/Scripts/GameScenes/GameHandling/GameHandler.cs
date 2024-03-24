@@ -63,6 +63,20 @@ public class GameHandler : MonoBehaviour
                 }
             }
         }
+        else if (state == State.Win)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                NextLevel();
+            }
+        }
+        else if (state == State.Dead)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                PlayerNewLife();
+            }
+        }
     }
 
     public static void NextLevel()

@@ -72,7 +72,7 @@ public class PlayerControl : MonoBehaviour
 
     private void HandleFirstMove()
     {
-        if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape))
+        if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape) && !Input.GetKeyDown(KeyCode.Return))
         {
             state = State.Playing;
             PlayerUnfreeze();
