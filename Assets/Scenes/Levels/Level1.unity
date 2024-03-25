@@ -193,6 +193,7 @@ MonoBehaviour:
   MaxLevel: 0
   WinExpectation: 70
   LifeAmount: 3
+  FoodStep: 20
 --- !u!1001 &309022975
 PrefabInstance:
   m_ObjectHideFlags: 0

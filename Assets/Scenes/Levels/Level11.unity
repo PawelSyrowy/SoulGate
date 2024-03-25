@@ -1354,6 +1354,7 @@ MonoBehaviour:
   MaxLevel: 0
   WinExpectation: 70
   LifeAmount: 1
+  FoodStep: 20
 --- !u!1 &264995909
 GameObject:
   m_ObjectHideFlags: 0

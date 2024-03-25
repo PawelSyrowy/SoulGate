@@ -37,14 +37,14 @@ public class GameHandler : MonoBehaviour
         LevelNumber = levelConfiguration.LevelNumber;
         IsMaxLevel = levelConfiguration.MaxLevel;
         Score.InitializeStatic(levelConfiguration.LifeAmount);
-        Progress.InitializeStatic(tilemapManager.TilemapBackground, levelConfiguration.WinExpectation);
+        Progress.InitializeStatic(tilemapManager.TilemapBackground, levelConfiguration.WinExpectation, levelConfiguration.FoodStep);
     }
 
     private void Start()
     {
-        levelGrid = new LevelGrid(player);
+        levelGrid = new LevelGrid(tilemapManager);
         player.Setup(levelGrid, tilemapManager);
-        tilemapManager.Setup(player, enemyManager);
+        tilemapManager.Setup(levelGrid, player, enemyManager);
     }
 
     private void Update()

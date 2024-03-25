@@ -18,4 +18,5 @@ public class LevelConfiguration : MonoBehaviour
     public bool MaxLevel;
     public float WinExpectation;
     public int LifeAmount;
+    public int FoodStep;
 }

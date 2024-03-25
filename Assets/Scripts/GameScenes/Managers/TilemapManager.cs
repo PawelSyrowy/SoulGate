@@ -21,6 +21,7 @@ public class TilemapManager : MonoBehaviour
     [SerializeField] internal Tilemap TilemapBorder;
     [SerializeField] internal Tilemap TilemapGhost;
     [SerializeField] internal TileBase TileToSpawn;
+    LevelGrid LevelGrid;
     PlayerControl Player;
     internal EnemyManager EnemyManager;
     [SerializeField] internal TilemapManagerDLC TilemapManagerDLC;
@@ -31,10 +32,11 @@ public class TilemapManager : MonoBehaviour
     Vector3Int firstCell;
     Vector3Int lastCell;
 
-    public void Setup(PlayerControl player, EnemyManager enemyManager)
+    public void Setup(LevelGrid levelGrid, PlayerControl player, EnemyManager enemyManager)
     {
         TileWorldPositions = GameHandler.TileWorldPositions;
         TileWorldSize = GameHandler.TileWorldSize;
+        LevelGrid = levelGrid;
         Player = player;
         EnemyManager = enemyManager;
 
@@ -54,15 +56,7 @@ public class TilemapManager : MonoBehaviour
             if (Player.CheckPlayerCanFinishDrawing(IsPlayerOnSafeTiles()))
             {
                 FinishDrawing();
-                if (Progress.CheckWin(TilemapSafe))
-                {
-                    Player.PlayerWin();
-                    GameHandler.PlayerWin();
-                }
-                else
-                {
-                    SoundManager.PlaySound(SoundManager.Sound.Complete);
-                }
+                CheckProgress();
             }
 
             Player.CheckIsPlayerDrawing(CheckGhostTilesExist());
@@ -135,6 +129,20 @@ public class TilemapManager : MonoBehaviour
         }
 
         TMExt.ReplaceAllTiles(TilemapGhost, TilemapSafe, TileToSpawn);
+    }
+
+    private void CheckProgress()
+    {
+        if (Progress.CheckWin(TilemapSafe))
+        {
+            Player.PlayerWin();
+            GameHandler.PlayerWin();
+        }
+        else
+        {
+            SoundManager.PlaySound(SoundManager.Sound.Complete);
+        }
+        LevelGrid.CheckFoodAmount();
     }
 
     private bool CheckGhostTilesExist()
