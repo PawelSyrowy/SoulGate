@@ -8,7 +8,8 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         PlayerPrefs.SetInt("restart", 10);
-        PlayerPrefs.Save(); 
+        PlayerPrefs.SetInt("saveLevel", 1);
+        PlayerPrefs.Save();
         SceneManager.LoadSceneAsync(2);
     }
 
@@ -19,7 +20,7 @@ public class MainMenu : MonoBehaviour
 
     public void ResetHighscore()
     {
-        PlayerPrefs.SetInt("highscore", 0);
-        PlayerPrefs.Save();
+        int savedLevel = PlayerPrefs.GetInt("saveLevel");
+        SceneManager.LoadSceneAsync(savedLevel+1);
     }
 }

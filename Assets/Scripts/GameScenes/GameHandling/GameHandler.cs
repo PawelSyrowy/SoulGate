@@ -157,7 +157,9 @@ public class GameHandler : MonoBehaviour
 
     public static void PlayerWin()
     {
-        SoundManager.PlaySound(SoundManager.Sound.Win);
+        SoundManager.PlaySound(SoundManager.Sound.Win); 
+        PlayerPrefs.SetInt("saveLevel", LevelNumber+1);
+        PlayerPrefs.Save();
         state = State.Win;
         WinGameWindow.ShowStatic();
     }
