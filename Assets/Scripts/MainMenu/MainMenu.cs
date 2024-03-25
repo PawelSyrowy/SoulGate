@@ -7,6 +7,8 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
+        PlayerPrefs.SetInt("restart", 10);
+        PlayerPrefs.Save(); 
         SceneManager.LoadSceneAsync(2);
     }
 

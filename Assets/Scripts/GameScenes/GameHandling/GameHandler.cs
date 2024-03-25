@@ -74,7 +74,7 @@ public class GameHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                PlayerNewLife();
+                ReloadScene();
             }
         }
     }
@@ -83,6 +83,7 @@ public class GameHandler : MonoBehaviour
     {
         if (!IsMaxLevel)
         {
+            SoundManager.PlaySound(SoundManager.Sound.Click);
             Loader.Scene parsedEnum;
             Enum.TryParse("Level" + (LevelNumber + 1).ToString(), out parsedEnum);
             Loader.Load(parsedEnum); 
@@ -95,10 +96,18 @@ public class GameHandler : MonoBehaviour
 
     public static void ReloadScene()
     {
-        Loader.Scene parsedEnum;
-        Enum.TryParse("Level" + LevelNumber.ToString(), out parsedEnum);
-        Loader.Load(parsedEnum);
-        SoundManager.PlaySound(SoundManager.Sound.Click);
+        if (Score.GetRestarts()>0)
+        {
+            SoundManager.PlaySound(SoundManager.Sound.Click);
+            Score.TrySetNewRestarts();
+            Loader.Scene parsedEnum;
+            Enum.TryParse("Level" + LevelNumber.ToString(), out parsedEnum);
+            Loader.Load(parsedEnum);
+        }
+        else
+        {
+            SoundManager.PlaySound(SoundManager.Sound.BadClick);
+        }
     }
 
     public static void GoToMainMenu()
@@ -123,9 +132,9 @@ public class GameHandler : MonoBehaviour
 
     public void PlayerNewLife()
     {
-        if (Score.GetScore()>0)
+        if (Score.GetLifes()>0)
         {
-            Score.RemoveScore(1, null);
+            Score.RemoveLifes(1, null);
             player.NewLife();
             state=State.Active;
             GameOverWindow.HideStatic();
@@ -134,22 +143,22 @@ public class GameHandler : MonoBehaviour
         else
         {
             SoundManager.PlaySound(SoundManager.Sound.BadClick);
+            state = State.Dead;
+            GameOverWindow.ShowStatic();
         }
     }
 
     public static void PlayerDied(TilemapManager tilemapManager)
     {
-        state = State.Dead;
-        GameOverWindow.ShowStatic();
-        tilemapManager.DestroyGhostTiles();
         SoundManager.PlaySound(SoundManager.Sound.Die);
+        tilemapManager.DestroyGhostTiles();
+        instance.PlayerNewLife();
     }
 
     public static void PlayerWin()
     {
+        SoundManager.PlaySound(SoundManager.Sound.Win);
         state = State.Win;
         WinGameWindow.ShowStatic();
-        Score.TrySetNewHighscore();
-        SoundManager.PlaySound(SoundManager.Sound.Win);
     }
 }

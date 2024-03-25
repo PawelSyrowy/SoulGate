@@ -9,7 +9,9 @@ using TMExt = TilemapManagerExtension;
 public class TilemapManagerDLC : MonoBehaviour
 {
     [SerializeField] Tilemap TilemapDestructables;
+    [SerializeField] Tilemap TilemapDestructablesEnemy;
     [SerializeField] Tilemap TilemapFakeGhost;
+    [SerializeField] Tilemap TilemapFakeGhostEnemy;
     TileBase TileToSpawn;
 
     internal void Setup(EnemyManager EnemyManager, TileBase tileToSpawn)
@@ -30,11 +32,13 @@ public class TilemapManagerDLC : MonoBehaviour
     {
         Vector3Int tilePosition = TMExt.GetTileFromPlayerCollision(playerCenter, contactPosition, TilemapDestructables);
         TilemapFakeGhost.SetTile(tilePosition, null);
+        TilemapFakeGhostEnemy.SetTile(tilePosition, null);
     }
 
     public void DestroyDestructables(Vector2 playerCenter, Vector2 contactPosition)
     {
         Vector3Int tilePosition = TMExt.GetTileFromPlayerCollision(playerCenter, contactPosition, TilemapDestructables);
         TilemapDestructables.SetTile(tilePosition, null);
+        TilemapDestructablesEnemy.SetTile(tilePosition, null);
     }
 }

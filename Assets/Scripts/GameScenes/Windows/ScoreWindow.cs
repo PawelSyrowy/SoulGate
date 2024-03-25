@@ -6,27 +6,33 @@ using UnityEngine.UI;
 public class ScoreWindow : MonoBehaviour
 {
     private static ScoreWindow instance;
-    private Text scoreText;
+    private Text lifeText;
 
     private void Awake()
     {
         instance = this;
-        scoreText = transform.Find("scoreText").GetComponent<Text>();
+        lifeText = transform.Find("lifeText").GetComponent<Text>();
     }
 
     private void Start()
     {
-        UpdateHighscore();
+        UpdateRestarts();
+        UpdateLives();
     }
 
-    private void Update()
+    private void UpdateRestarts()
     {
-        scoreText.text = "Lives left: " + Score.GetScore().ToString();
+        int highscore = Score.GetRestarts();
+        transform.Find("restartText").GetComponent<Text>().text = "Restarts: " + highscore.ToString();
     }
 
-    private void UpdateHighscore()
+    private void UpdateLives()
     {
-        int highscore = Score.GetHighscore();
-        transform.Find("highscoreText").GetComponent<Text>().text = highscore.ToString();
+        lifeText.text = "Lives: " + Score.GetLifes().ToString();
+    }
+
+    public static void UpdateLivesStatic()
+    {
+        instance.UpdateLives();
     }
 }

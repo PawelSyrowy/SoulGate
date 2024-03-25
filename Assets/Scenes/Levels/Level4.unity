@@ -192,7 +192,7 @@ MonoBehaviour:
   LevelNumber: 4
   MaxLevel: 0
   WinExpectation: 75
-  LifeAmount: 1
+  LifeAmount: 2
 --- !u!114 &347440333 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2156822332893423062, guid: df68313ab28177a47845142a6f5f08b1, type: 3}
@@ -402,6 +402,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6871275066145978161, guid: bdd387c4c7cd3b243b3ca24e1761a3c8, type: 3}
+      propertyPath: moveSpeed
+      value: 35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -432,6 +436,14 @@ PrefabInstance:
       objectReference: {fileID: 1494986790}
     - target: {fileID: 3156500965589900538, guid: 29750e0d2f950aa4c934dbd3848dea6c, type: 3}
       propertyPath: TilemapDestructables
+      value: 
+      objectReference: {fileID: 1494986790}
+    - target: {fileID: 3156500965589900538, guid: 29750e0d2f950aa4c934dbd3848dea6c, type: 3}
+      propertyPath: TilemapFakeGhostEnemy
+      value: 
+      objectReference: {fileID: 1494986790}
+    - target: {fileID: 3156500965589900538, guid: 29750e0d2f950aa4c934dbd3848dea6c, type: 3}
+      propertyPath: TilemapDestructablesEnemy
       value: 
       objectReference: {fileID: 1494986790}
     - target: {fileID: 4380984422593557580, guid: 29750e0d2f950aa4c934dbd3848dea6c, type: 3}
@@ -29263,7 +29275,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.5018867, g: 0.11366062, b: 0.05208253, a: 1}
+  m_Color: {r: 0.6, g: 0.18039216, b: 0.4, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -29396,6 +29408,10 @@ PrefabInstance:
     - target: {fileID: 6798859752707701775, guid: bdd387c4c7cd3b243b3ca24e1761a3c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871275066145978161, guid: bdd387c4c7cd3b243b3ca24e1761a3c8, type: 3}
+      propertyPath: moveSpeed
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29536,7 +29552,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.5018867, g: 0.11366062, b: 0.05208253, a: 1}
+  m_Color: {r: 0.6, g: 0.18039216, b: 0.4, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

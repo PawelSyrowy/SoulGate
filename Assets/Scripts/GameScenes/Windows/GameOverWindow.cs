@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class GameOverWindow : MonoBehaviour
 {
     private static GameOverWindow instance;
-    [SerializeField] Image lifeBtnImage;
+    [SerializeField] Image reloadBtnImage;
+    [SerializeField] Text reloadBtnText;
 
     private void Awake()
     {
@@ -18,13 +19,14 @@ public class GameOverWindow : MonoBehaviour
     private void Show()
     {
         gameObject.SetActive(true);
-        if (Score.GetScore() > 0)
+        reloadBtnText.text = "Reloads ("+ Score.GetRestarts().ToString() +")";
+        if (Score.GetRestarts() > 0)
         {
-            lifeBtnImage.color = new UnityEngine.Color(0f, 1f, 0f);
+            reloadBtnImage.color = new UnityEngine.Color(0f, 1f, 0f);
         }
         else
         {
-            lifeBtnImage.color = new UnityEngine.Color(0.5f, 0.5f, 0.5f);
+            reloadBtnImage.color = new UnityEngine.Color(0.5f, 0.5f, 0.5f);
         }
     }
 

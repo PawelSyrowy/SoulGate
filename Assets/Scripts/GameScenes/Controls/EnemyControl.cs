@@ -8,7 +8,6 @@ using Random = System.Random;
 
 public class EnemyControl : MonoBehaviour
 {
-    // todo maksymalna prêdkoœæ dla enemy
     public event EventHandler OnCollisionWithGhostTile;
 
     public event EventHandler <OnCollisionWithFakeGhostTileEventArgs> OnCollisionWithFakeGhostTile;
@@ -74,6 +73,16 @@ public class EnemyControl : MonoBehaviour
             Vector2 movement = new(dX, dY);
             rb.velocity = moveSpeed * movement;
         }
+        //if (rb.velocity.x > 100 || rb.velocity.x < -100) todo
+        //{
+        //    rb.velocity = moveSpeed * new Vector2 (rb.velocity.x/2, rb.velocity.y);
+        //    transform.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0f, 1f, 0f);
+        //}
+        //if (rb.velocity.y > 100 || rb.velocity.y < -100)
+        //{
+        //    rb.velocity = moveSpeed * new Vector2(rb.velocity.x , rb.velocity.y / 2);
+        //    transform.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0f, 1f, 0f);
+        //}
     }
 
     public static double CalculateY(double x)

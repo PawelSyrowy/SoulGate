@@ -6,45 +6,46 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public static class Score
 {
-    private static int score;
+    private static int lifes;
+    private static int restarts;
 
     public static void InitializeStatic(int lifeAmount)
     {
-        score = lifeAmount;
+        lifes = lifeAmount;
+        restarts = GetRestarts();
     }
 
-    public static int GetScore()
+    public static int GetLifes()
     {
-        return score;
+        return lifes;
     }
 
-    public static void AddScore()
+    public static void AddLifes()
     {
-        score += 1;
+        lifes += 1;
+        ScoreWindow.UpdateLivesStatic();
     }
 
-    public static void RemoveScore(int amount, PlayerControl player)
+    public static void RemoveLifes(int amount, PlayerControl player)
     {
-        score -= amount;
-        if (score < 0)
+        lifes -= amount;
+        if (lifes < 0)
         {
             player.PlayerDied();
         }
+        ScoreWindow.UpdateLivesStatic();
     }
 
-    public static int GetHighscore()
+    public static int GetRestarts()
     {
-        int high = PlayerPrefs.GetInt("highscore");
-        return high;
+        int restarts = PlayerPrefs.GetInt("restart");
+        return restarts;
     }
 
-    public static void TrySetNewHighscore()
+    public static void TrySetNewRestarts()
     {
-        int highscore = GetHighscore();
-        if (score > highscore)
-        {
-            PlayerPrefs.SetInt("highscore", score);
-            PlayerPrefs.Save();
-        }
+        restarts--;
+        PlayerPrefs.SetInt("restart", restarts);
+        PlayerPrefs.Save();
     }
 }

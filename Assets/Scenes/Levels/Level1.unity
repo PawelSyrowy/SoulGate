@@ -468,6 +468,14 @@ PrefabInstance:
       propertyPath: TilemapDestructables
       value: 
       objectReference: {fileID: 1494986790}
+    - target: {fileID: 3156500965589900538, guid: 29750e0d2f950aa4c934dbd3848dea6c, type: 3}
+      propertyPath: TilemapFakeGhostEnemy
+      value: 
+      objectReference: {fileID: 1494986790}
+    - target: {fileID: 3156500965589900538, guid: 29750e0d2f950aa4c934dbd3848dea6c, type: 3}
+      propertyPath: TilemapDestructablesEnemy
+      value: 
+      objectReference: {fileID: 1494986790}
     - target: {fileID: 4380984422593557580, guid: 29750e0d2f950aa4c934dbd3848dea6c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -29257,14 +29265,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 244356097}
-    - target: {fileID: 5060279557931206022, guid: 74b5bdde3b9f0944a865c7199d2090f5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 244356097}
-    - target: {fileID: 7707604840815959402, guid: 74b5bdde3b9f0944a865c7199d2090f5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 244356097}
     - target: {fileID: 8025017720000866191, guid: 74b5bdde3b9f0944a865c7199d2090f5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -32112,6 +32112,10 @@ PrefabInstance:
     - target: {fileID: 6798859752707701775, guid: bdd387c4c7cd3b243b3ca24e1761a3c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871275066145978161, guid: bdd387c4c7cd3b243b3ca24e1761a3c8, type: 3}
+      propertyPath: moveSpeed
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
